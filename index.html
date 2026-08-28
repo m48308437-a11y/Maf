@@ -1,47 +1,1655 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MFA | مای‌فیوریت‌انیمه</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100..900&display=swap" rel="stylesheet">
-<style>
-:root{--bg:#fffbfc;--bg2:#fdf2f7;--card:#fff;--ink:#2a1220;--soft:#7a5a69;--faint:#b98fa3;--a:#e893b3;--deep:#c15c86;--line:#f0d2df;--gold:#c9932f;--shadow:0 18px 40px -22px rgba(193,92,134,.35);--max:1240px}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font-family:Vazirmatn,sans-serif;-webkit-font-smoothing:antialiased}a{text-decoration:none;color:inherit}button,input,select{font:inherit}.wrap{max-width:var(--max);margin:auto;padding:0 28px}
-.navbar{position:sticky;top:0;z-index:50;background:rgba(255,251,252,.9);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}.nav{height:76px;display:flex;align-items:center;justify-content:space-between;gap:20px}.logo{font-weight:800;font-size:1.45rem}.logo b{font-family:Georgia,serif;font-style:italic;color:var(--deep)}.navlinks{display:flex;gap:28px;color:var(--soft);font-size:.92rem}.navlinks a:hover{color:var(--deep)}.actions{display:flex;gap:10px;align-items:center}.icon{width:40px;height:40px;border:1px solid var(--line);border-radius:50%;background:var(--card);display:grid;place-items:center}.btn{border:0;border-radius:999px;padding:11px 20px;font-weight:700;cursor:pointer}.primary{background:var(--ink);color:#fff}.primary:hover{background:var(--deep)}.outline{background:transparent;border:1px solid var(--ink)}
-.hero{position:relative;overflow:hidden;padding:70px 0 56px;background:radial-gradient(120% 100% at 100% 0,var(--bg2),var(--bg) 60%)}.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:center}.eyebrow{color:var(--deep);font-weight:800;font-size:.78rem;letter-spacing:.1em;margin-bottom:18px}.hero h1{font-size:3rem;line-height:1.28;margin:0 0 16px}.hero h1 em{font-family:Georgia,serif;color:var(--deep);font-weight:400}.hero p{color:var(--soft);font-size:1.03rem;line-height:2;max-width:560px;margin:0 0 28px}.cta{display:flex;gap:12px;flex-wrap:wrap}.feature{background:#fff;padding:22px;border:1px solid var(--line);border-radius:26px;box-shadow:var(--shadow)}.poster{height:320px;border-radius:20px;position:relative;overflow:hidden;background:linear-gradient(155deg,#f6d3e1,#eda9c2 45%,#c15c86)}.poster:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 25% 20%,rgba(255,255,255,.5),transparent 38%)}.tag{position:absolute;right:18px;top:18px;color:#fff;background:rgba(42,18,32,.58);padding:7px 14px;border-radius:999px;font-size:.75rem}.featuremeta{display:flex;justify-content:space-between;gap:20px;align-items:end;margin-top:18px}.featuremeta h3{margin:0 0 5px}.jp{font-size:.8rem;color:var(--faint)}.score{color:var(--gold);font-weight:800}
-.ad{margin:32px 0;border:1px dashed var(--line);background:var(--bg2);border-radius:14px;padding:17px 22px;color:var(--faint);display:flex;justify-content:space-between;gap:12px}
-section{padding:52px 0}.alt{background:var(--bg2)}.head{display:flex;align-items:end;justify-content:space-between;margin-bottom:22px}.head h2{margin:0 0 5px;font-size:1.5rem}.head p{margin:0;color:var(--soft);font-size:.87rem}.see{color:var(--deep);font-weight:800;font-size:.84rem}.hscroll{display:flex;gap:18px;overflow:auto;padding:4px 2px 14px}.card{flex:0 0 220px;background:#fff;border:1px solid var(--line);border-radius:16px;overflow:hidden;transition:.2s}.card:hover{transform:translateY(-5px);box-shadow:var(--shadow)}.thumb{height:150px}.body{padding:12px 14px 16px}.body h4{margin:0 0 5px;font-size:.92rem}.muted{color:var(--faint);font-size:.73rem}.p1{background:linear-gradient(160deg,#f7d8e4,#d97ba2)}.p2{background:linear-gradient(160deg,#e7c4e0,#b678b0)}.p3{background:linear-gradient(160deg,#f3e0c7,#d9a25d)}.p4{background:linear-gradient(160deg,#cde0d8,#7fa98f)}.p5{background:linear-gradient(160deg,#f6c9c9,#c97070)}.p6{background:linear-gradient(160deg,#d8d6f3,#8a85c9)}.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}.rank{background:#fff;border:1px solid var(--line);border-radius:18px;overflow:hidden}.rank:hover{box-shadow:var(--shadow);transform:scale(1.02)}.rankthumb{height:230px;position:relative}.num{position:absolute;right:10px;top:4px;color:#fff;font:italic 2.5rem Georgia;text-shadow:0 3px 12px rgba(0,0,0,.35)}.rankbody{padding:14px 16px 18px}.rankbody h4{margin:0 0 7px}.rankfoot{display:flex;justify-content:space-between;align-items:center}.pill{font-size:.67rem;padding:4px 8px;border-radius:999px;background:var(--bg2);color:var(--deep)}.genres{display:flex;flex-wrap:wrap;gap:10px}.genre{padding:11px 18px;border:1px solid var(--line);border-radius:999px;background:#fff;color:var(--soft);font-size:.84rem;font-weight:700}.genre:hover{background:var(--a);color:#fff;border-color:var(--a)}footer{background:var(--ink);color:#ecd6df;padding:52px 0 28px}.footgrid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:36px}.footgrid h4{color:#fff;margin:0 0 15px}.footgrid p,.footgrid a{color:#d7b7c4;font-size:.83rem;line-height:1.9}.footgrid ul{list-style:none;padding:0;margin:0;display:grid;gap:8px}.bottom{border-top:1px solid rgba(255,255,255,.1);margin-top:34px;padding-top:20px;display:flex;justify-content:space-between;color:#ae899b;font-size:.75rem}
-@media(max-width:980px){.hero-grid{grid-template-columns:1fr}.feature{order:-1}.grid4{grid-template-columns:repeat(2,1fr)}.navlinks{display:none}.footgrid{grid-template-columns:1fr 1fr}}@media(max-width:560px){.wrap{padding:0 18px}.hero h1{font-size:2.15rem}.grid4{grid-template-columns:1fr}.footgrid{grid-template-columns:1fr}.bottom{flex-direction:column;gap:8px}}
-</style></head>
-<body>
-<header class="navbar"><div class="wrap nav"><a class="logo" href="index.html"><b>MFA</b> مای‌فیوریت‌انیمه</a><nav class="navlinks"><a href="index.html">خانه</a><a href="#airing">در حال پخش</a><a href="#top">محبوب‌ترین</a><a href="search.html">جستجو</a><a href="#newest">جدیدترین</a></nav><div class="actions"><a class="icon" href="search.html" title="جستجو">⌕</a><button class="btn primary" id="loginBtn">ورود / ثبت‌نام</button></div></div></header>
-<section class="hero"><div class="wrap hero-grid"><div><div class="eyebrow">دانشنامه‌ی انیمه، به زبان فارسی</div><h1>هر انیمه، با <em>جزئیات</em> کامل و بی‌نقص</h1><p>معرفی، امتیازدهی و بررسی انیمه‌ها؛ از فصل‌های در حال پخش تا کلاسیک‌های ماندگار، همه در یک آرشیو تمیز و قابل جستجو.</p><div class="cta"><a class="btn primary" href="search.html">شروع کاوش</a><a class="btn outline" href="search.html">فهرست کامل انیمه‌ها</a></div></div><a class="feature" href="anime-detail.html"><div class="poster p1"><span class="tag">انتخاب سردبیر</span></div><div class="featuremeta"><div><h3>سایه‌های اسپاراد</h3><div class="jp">スパラードの影</div></div><div class="score">★ ۹.۲</div></div></a></div></section>
-<div class="wrap"><div class="ad"><strong>تبلیغات</strong><span>فضای بنر تبلیغاتی — ۷۲۸ × ۹۰</span><span></span></div></div>
-<section id="airing"><div class="wrap"><div class="head"><div><h2>در حال پخش این فصل</h2><p>قسمت‌های تازه، هر هفته به‌روزرسانی می‌شود</p></div><a class="see" href="search.html?status=airing">مشاهده همه ›</a></div><div class="hscroll" id="airingList"></div></div></section>
-<section class="alt" id="top"><div class="wrap"><div class="head"><div><h2>محبوب‌ترین انیمه‌ها</h2><p>رتبه‌بندی بر اساس امتیاز کاربران MFA</p></div><a class="see" href="search.html?sort=score">مشاهده همه ›</a></div><div class="grid4" id="rankList"></div></div></section>
-<section id="newest"><div class="wrap"><div class="head"><div><h2>جدیدترین‌ها</h2><p>تازه‌ترین افزوده‌شده‌ها به آرشیو</p></div><a class="see" href="search.html?sort=newest">مشاهده همه ›</a></div><div class="grid4" id="newestList"></div></div></section>
-<section><div class="wrap"><div class="head"><div><h2>مرور بر اساس ژانر</h2><p>انیمه مورد علاقه‌ات را سریع‌تر پیدا کن</p></div></div><div class="genres"><a class="genre" href="search.html?genre=اکشن">اکشن</a><a class="genre" href="search.html?genre=فانتزی">فانتزی</a><a class="genre" href="search.html?genre=درام">درام</a><a class="genre" href="search.html?genre=رمانتیک">رمانتیک</a><a class="genre" href="search.html?genre=ورزشی">ورزشی</a><a class="genre" href="search.html?genre=علمی‌تخیلی">علمی‌تخیلی</a><a class="genre" href="search.html?genre=کمدی">کمدی</a><a class="genre" href="search.html?genre=ماجراجویی">ماجراجویی</a></div></div></section>
-<footer><div class="wrap"><div class="footgrid"><div><h4>درباره MFA</h4><p>مای‌فیوریت‌انیمه یک دانشنامه‌ی فارسی‌زبان برای معرفی، بررسی و امتیازدهی انیمه‌هاست.</p></div><div><h4>لینک‌های مفید</h4><ul><li><a href="index.html">خانه</a></li><li><a href="search.html">جستجو</a></li><li><a href="admin.html">پنل مدیریت</a></li></ul></div><div><h4>دسته‌بندی‌ها</h4><ul><li><a href="#airing">در حال پخش</a></li><li><a href="#top">محبوب‌ترین</a></li><li><a href="#newest">جدیدترین‌ها</a></li></ul></div><div><h4>جامعه</h4><ul><li><a href="#">قوانین سایت</a></li><li><a href="#">حریم خصوصی</a></li><li><a href="#">تماس با ما</a></li></ul></div></div><div class="bottom"><span>© ۱۴۰۵ MFA — تمامی حقوق محفوظ است</span><span>ساخته‌شده با ❤ برای عاشقان انیمه</span></div></div></footer>
-<script>
-const base=[
-{t:'سایه‌های اسپاراد',jp:'スパラードの影',score:9.2,g:['فانتزی','اکشن'],status:'در حال پخش'},
-{t:'خط شکن آسمان',jp:'空の破断線',score:9,g:['اکشن','فانتزی'],status:'در حال پخش'},
-{t:'باغ ون‌یو',jp:'ヴァンユウの庭',score:8.8,g:['درام'],status:'پایان‌یافته'},
-{t:'مریدیان سرخ',jp:'紅の子午線',score:8.7,g:['علمی‌تخیلی'],status:'در حال پخش'},
-{t:'زمزمه‌های کاگه',jp:'影の囁き',score:8.6,g:['رمزآلود','درام'],status:'در حال پخش'},
-{t:'ترانه‌ی موج پنجم',jp:'第五波の歌',score:8.5,g:['موسیقی'],status:'پایان‌یافته'},
-{t:'باشگاه ستاره صبح',jp:'朝星クラブ',score:8.4,g:['ورزشی'],status:'در حال پخش'},
-{t:'دفترچه هزار فصل',jp:'千季ノート',score:8.3,g:['اسلایس‌آف‌لایف'],status:'در حال پخش'},
-{t:'کوره‌راه یشمی',jp:'翡翠の小道',score:8.1,g:['فانتزی','ماجراجویی'],status:'پایان‌یافته'},
-{t:'ساعت شنی هوا',jp:'風の砂時計',score:7.9,g:['علمی‌تخیلی'],status:'اعلام‌شده'},
-{t:'رقص مه صبحگاهی',jp:'朝霧の舞',score:7.8,g:['رمانتیک','درام'],status:'در حال پخش'},
-{t:'نور در آب',jp:'水の中の光',score:7.6,g:['درام'],status:'پایان‌یافته'}];
-const custom=JSON.parse(localStorage.getItem('mfaAnime')||'[]'); const all=[...custom,...base]; const pal=['p1','p2','p3','p4','p5','p6'];
-const airing=document.getElementById('airingList'); all.filter(x=>x.status==='در حال پخش').slice(0,8).forEach((x,i)=>airing.innerHTML+=`<a class="card" href="search.html?q=${encodeURIComponent(x.t)}"><div class="thumb ${pal[i%pal.length]}"></div><div class="body"><h4>${x.t}</h4><div class="muted">${x.g.join(' · ')}</div></div></a>`);
-const rank=document.getElementById('rankList'); [...all].sort((a,b)=>b.score-a.score).slice(0,8).forEach((x,i)=>rank.innerHTML+=`<a class="rank" href="search.html?q=${encodeURIComponent(x.t)}"><div class="rankthumb ${pal[i%pal.length]}"><div class="num">${i+1}</div></div><div class="rankbody"><h4>${x.t}</h4><div class="rankfoot"><span class="score">★ ${x.score}</span><span class="pill">${x.g[0]}</span></div></div></a>`);
-const newest=document.getElementById('newestList'); all.slice(0,8).forEach((x,i)=>newest.innerHTML+=`<a class="rank" href="search.html?q=${encodeURIComponent(x.t)}"><div class="rankthumb ${pal[i%pal.length]}"></div><div class="rankbody"><h4>${x.t}</h4><div class="muted">۱۴۰۵ · ${x.status}</div></div></a>`);
-document.getElementById('loginBtn').onclick=()=>alert('ورود و ثبت‌نام در نسخه‌ی بعدی به سیستم حساب کاربری متصل می‌شود.');
-</script></body></html>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MFA | مای‌فیوریت‌انیمه</title>
 
-<script src="app.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100..900&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg:#FFFBFC;
+      --bg-alt:#FDF2F7;
+      --card:#FFFFFF;
+      --ink:#2A1220;
+      --ink-soft:#7A5A69;
+      --ink-faint:#B98FA3;
+      --accent:#E893B3;
+      --accent-deep:#C15C86;
+      --accent-line:#F3CADA;
+      --gold:#C9932F;
+      --green:#5CE0A0;
+      --shadow:0 18px 40px -22px rgba(193,92,134,.35);
+      --maxw:1240px;
+    }
+
+    *{box-sizing:border-box}
+
+    html{scroll-behavior:smooth}
+
+    body{
+      margin:0;
+      background:var(--bg);
+      color:var(--ink);
+      font-family:'Vazirmatn',sans-serif;
+      -webkit-font-smoothing:antialiased;
+    }
+
+    a{
+      color:inherit;
+      text-decoration:none;
+    }
+
+    button,
+    input{
+      font-family:inherit;
+    }
+
+    img{
+      max-width:100%;
+      display:block;
+    }
+
+    .wrap{
+      max-width:var(--maxw);
+      margin:0 auto;
+      padding:0 28px;
+    }
+
+    /* ---------------- NAVBAR ---------------- */
+
+    .navbar{
+      position:sticky;
+      top:0;
+      z-index:100;
+      background:rgba(255,251,252,.9);
+      backdrop-filter:blur(10px);
+      border-bottom:1px solid var(--accent-line);
+    }
+
+    .nav-inner{
+      min-height:76px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:20px;
+    }
+
+    .logo{
+      font-weight:800;
+      font-size:1.45rem;
+      display:flex;
+      align-items:baseline;
+      gap:6px;
+      white-space:nowrap;
+    }
+
+    .logo .mark{
+      color:var(--accent-deep);
+      font-family:Georgia,serif;
+      font-style:italic;
+    }
+
+    .nav-links{
+      display:flex;
+      align-items:center;
+      gap:28px;
+      font-size:.92rem;
+      font-weight:500;
+      color:var(--ink-soft);
+    }
+
+    .nav-links a{
+      position:relative;
+      padding:7px 0;
+      transition:.2s;
+    }
+
+    .nav-links a:hover{
+      color:var(--accent-deep);
+    }
+
+    .nav-links a::after{
+      content:"";
+      position:absolute;
+      right:0;
+      bottom:-2px;
+      width:0;
+      height:2px;
+      background:var(--accent-deep);
+      transition:.25s;
+    }
+
+    .nav-links a:hover::after{
+      width:100%;
+    }
+
+    .nav-actions{
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
+
+    .icon-btn{
+      width:40px;
+      height:40px;
+      border-radius:50%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      border:1px solid var(--accent-line);
+      background:var(--card);
+      font-size:1.1rem;
+      transition:.2s;
+    }
+
+    .icon-btn:hover{
+      background:var(--bg-alt);
+    }
+
+    .btn{
+      border:none;
+      cursor:pointer;
+      padding:11px 20px;
+      border-radius:999px;
+      font-size:.88rem;
+      font-weight:700;
+      transition:.2s;
+    }
+
+    .btn-primary{
+      background:var(--ink);
+      color:#fff;
+    }
+
+    .btn-primary:hover{
+      background:var(--accent-deep);
+    }
+
+    .btn-outline{
+      background:transparent;
+      border:1.5px solid var(--ink);
+      color:var(--ink);
+    }
+
+    .btn-outline:hover{
+      border-color:var(--accent-deep);
+      color:var(--accent-deep);
+    }
+
+    /* ---------------- HERO ---------------- */
+
+    .hero{
+      position:relative;
+      overflow:hidden;
+      background:
+        radial-gradient(120% 100% at 100% 0%,var(--bg-alt) 0%,var(--bg) 56%);
+      padding:72px 0 58px;
+    }
+
+    .petal-field{
+      position:absolute;
+      inset:0;
+      overflow:hidden;
+      pointer-events:none;
+    }
+
+    .petal{
+      position:absolute;
+      top:-40px;
+      width:14px;
+      height:14px;
+      border-radius:0 60% 0 60%;
+      background:linear-gradient(135deg,var(--accent),#F6C9DB);
+      opacity:.55;
+      animation:fall linear infinite;
+    }
+
+    @keyframes fall{
+      0%{
+        transform:translateY(0) rotate(0deg);
+      }
+      100%{
+        transform:translateY(560px) rotate(300deg);
+      }
+    }
+
+    .hero-grid{
+      position:relative;
+      z-index:2;
+      display:grid;
+      grid-template-columns:1.05fr .95fr;
+      align-items:center;
+      gap:48px;
+    }
+
+    .eyebrow{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      color:var(--accent-deep);
+      font-size:.78rem;
+      font-weight:800;
+      letter-spacing:.08em;
+      margin-bottom:18px;
+    }
+
+    .eyebrow::before{
+      content:"";
+      width:24px;
+      height:1px;
+      background:var(--accent-deep);
+    }
+
+    .hero h1{
+      margin:0 0 18px;
+      font-size:3rem;
+      line-height:1.25;
+      font-weight:800;
+    }
+
+    .hero h1 em{
+      color:var(--accent-deep);
+      font-family:Georgia,serif;
+      font-style:italic;
+      font-weight:400;
+    }
+
+    .hero-text{
+      color:var(--ink-soft);
+      font-size:1.05rem;
+      line-height:1.95;
+      max-width:560px;
+      margin:0 0 30px;
+    }
+
+    .hero-cta{
+      display:flex;
+      flex-wrap:wrap;
+      gap:12px;
+    }
+
+    .hero-feature{
+      background:var(--card);
+      border:1px solid var(--accent-line);
+      border-radius:26px;
+      padding:22px;
+      box-shadow:var(--shadow);
+      transition:.25s;
+    }
+
+    .hero-feature:hover{
+      transform:translateY(-5px);
+    }
+
+    .feature-poster{
+      min-height:300px;
+      border-radius:18px;
+      overflow:hidden;
+      position:relative;
+      display:flex;
+      align-items:flex-end;
+      padding:20px;
+      background:
+        radial-gradient(circle at 25% 20%,rgba(255,255,255,.45),transparent 30%),
+        linear-gradient(155deg,#F6D3E1 0%,#EDA9C2 45%,#C15C86 100%);
+    }
+
+    .feature-poster.has-image{
+      background-size:cover;
+      background-position:center;
+    }
+
+    .feature-overlay{
+      position:absolute;
+      inset:0;
+      background:linear-gradient(to top,rgba(42,18,32,.7),transparent 65%);
+    }
+
+    .feature-tag{
+      position:relative;
+      z-index:2;
+      color:#fff;
+      background:rgba(42,18,32,.55);
+      backdrop-filter:blur(6px);
+      border-radius:999px;
+      padding:6px 13px;
+      font-size:.72rem;
+      font-weight:700;
+    }
+
+    .feature-meta{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-end;
+      gap:16px;
+      margin-top:18px;
+    }
+
+    .feature-meta h3{
+      margin:0 0 5px;
+      font-size:1.25rem;
+    }
+
+    .feature-meta .jp{
+      color:var(--ink-faint);
+      font-size:.82rem;
+    }
+
+    .stars{
+      color:var(--gold);
+      font-weight:800;
+      white-space:nowrap;
+    }
+
+    /* ---------------- AD ---------------- */
+
+    .ad-wrap{
+      padding-top:34px;
+    }
+
+    .ad-banner{
+      min-height:84px;
+      border:1px dashed var(--accent-line);
+      background:var(--bg-alt);
+      border-radius:16px;
+      padding:18px 22px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:20px;
+      color:var(--ink-faint);
+      font-size:.82rem;
+    }
+
+    .ad-banner .label{
+      color:var(--accent-deep);
+      font-weight:800;
+    }
+
+    /* ---------------- SECTIONS ---------------- */
+
+    .block{
+      padding:56px 0;
+    }
+
+    .block.alt{
+      background:var(--bg-alt);
+    }
+
+    .block-head{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-end;
+      gap:18px;
+      margin-bottom:26px;
+    }
+
+    .block-head h2{
+      margin:0 0 5px;
+      font-size:1.55rem;
+      font-weight:800;
+    }
+
+    .sub{
+      color:var(--ink-soft);
+      font-size:.88rem;
+    }
+
+    .see-all{
+      color:var(--accent-deep);
+      font-size:.84rem;
+      font-weight:800;
+      white-space:nowrap;
+    }
+
+    /* ---------------- HORIZONTAL ---------------- */
+
+    .hscroll{
+      display:flex;
+      gap:18px;
+      overflow-x:auto;
+      padding:3px 2px 14px;
+      scroll-snap-type:x proximity;
+    }
+
+    .hscroll::-webkit-scrollbar{
+      height:6px;
+    }
+
+    .hscroll::-webkit-scrollbar-thumb{
+      background:var(--accent-line);
+      border-radius:99px;
+    }
+
+    .airing-card{
+      flex:0 0 220px;
+      scroll-snap-align:start;
+      background:var(--card);
+      border:1px solid var(--accent-line);
+      border-radius:16px;
+      overflow:hidden;
+      transition:.25s;
+    }
+
+    .airing-card:hover{
+      transform:translateY(-6px);
+      box-shadow:var(--shadow);
+    }
+
+    .airing-thumb{
+      height:150px;
+      position:relative;
+      background-size:cover;
+      background-position:center;
+    }
+
+    .airing-thumb.has-image{
+      background-color:#ddd;
+    }
+
+    .ep-badge{
+      position:absolute;
+      top:10px;
+      left:10px;
+      padding:4px 9px;
+      border-radius:999px;
+      background:var(--ink);
+      color:#fff;
+      font-size:.66rem;
+      font-weight:800;
+    }
+
+    .live{
+      position:absolute;
+      right:10px;
+      bottom:10px;
+      display:flex;
+      align-items:center;
+      gap:6px;
+      color:#fff;
+      background:rgba(42,18,32,.58);
+      border-radius:999px;
+      padding:4px 8px;
+      font-size:.64rem;
+      font-weight:800;
+    }
+
+    .live-dot{
+      width:6px;
+      height:6px;
+      border-radius:50%;
+      background:var(--green);
+      box-shadow:0 0 8px var(--green);
+    }
+
+    .airing-body{
+      padding:12px 14px 16px;
+    }
+
+    .airing-body h4{
+      margin:0 0 5px;
+      font-size:.91rem;
+    }
+
+    .airing-body .genre{
+      color:var(--ink-faint);
+      font-size:.7rem;
+    }
+
+    /* ---------------- GRID ---------------- */
+
+    .rank-grid{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:20px;
+    }
+
+    .rank-card{
+      background:var(--card);
+      border:1px solid var(--accent-line);
+      border-radius:18px;
+      overflow:hidden;
+      transition:.25s;
+    }
+
+    .rank-card:hover{
+      transform:scale(1.025);
+      box-shadow:var(--shadow);
+    }
+
+    .rank-poster{
+      height:230px;
+      position:relative;
+      background-size:cover;
+      background-position:center;
+    }
+
+    .rank-num{
+      position:absolute;
+      top:0;
+      right:0;
+      padding:7px 15px;
+      color:#fff;
+      font-family:Georgia,serif;
+      font-style:italic;
+      font-size:2.4rem;
+      line-height:1;
+      text-shadow:0 4px 14px rgba(0,0,0,.35);
+    }
+
+    .rank-body{
+      padding:14px 16px 18px;
+    }
+
+    .rank-body h4{
+      margin:0 0 9px;
+      font-size:.95rem;
+    }
+
+    .rank-foot{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:8px;
+    }
+
+    .genre-pill{
+      color:var(--accent-deep);
+      background:var(--bg-alt);
+      border:1px solid var(--accent-line);
+      padding:3px 9px;
+      border-radius:999px;
+      font-size:.66rem;
+    }
+
+    /* ---------------- NEWEST ---------------- */
+
+    .newest-grid{
+      display:grid;
+      grid-template-columns:repeat(6,1fr);
+      gap:16px;
+    }
+
+    .newest-card{
+      background:var(--card);
+      border:1px solid var(--accent-line);
+      border-radius:14px;
+      overflow:hidden;
+      transition:.2s;
+    }
+
+    .newest-card:hover{
+      transform:translateY(-4px);
+      box-shadow:var(--shadow);
+    }
+
+    .newest-thumb{
+      height:120px;
+      background-size:cover;
+      background-position:center;
+    }
+
+    .newest-body{
+      padding:10px 12px 14px;
+    }
+
+    .newest-body h5{
+      margin:0 0 4px;
+      font-size:.81rem;
+      line-height:1.5;
+    }
+
+    .newest-body .yr{
+      color:var(--ink-faint);
+      font-size:.67rem;
+    }
+
+    /* ---------------- GENRES ---------------- */
+
+    .genre-row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:12px;
+    }
+
+    .genre-chip{
+      padding:11px 20px;
+      border-radius:999px;
+      background:var(--card);
+      border:1px solid var(--accent-line);
+      color:var(--ink-soft);
+      font-size:.83rem;
+      font-weight:700;
+      transition:.2s;
+    }
+
+    .genre-chip:hover{
+      background:var(--accent);
+      border-color:var(--accent);
+      color:#fff;
+    }
+
+    /* ---------------- LOGIN MODAL ---------------- */
+
+    .modal{
+      display:none;
+      position:fixed;
+      inset:0;
+      z-index:200;
+      background:rgba(42,18,32,.4);
+      backdrop-filter:blur(5px);
+      align-items:center;
+      justify-content:center;
+      padding:20px;
+    }
+
+    .modal.show{
+      display:flex;
+    }
+
+    .modal-card{
+      width:min(430px,100%);
+      background:var(--card);
+      border:1px solid var(--accent-line);
+      border-radius:22px;
+      padding:26px;
+      box-shadow:0 30px 80px rgba(42,18,32,.2);
+    }
+
+    .modal-head{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      margin-bottom:18px;
+    }
+
+    .modal-head h3{
+      margin:0;
+      font-size:1.1rem;
+    }
+
+    .close-btn{
+      border:none;
+      background:transparent;
+      font-size:1.4rem;
+      cursor:pointer;
+      color:var(--ink-soft);
+    }
+
+    .login-tabs{
+      display:flex;
+      gap:6px;
+      background:var(--bg-alt);
+      padding:4px;
+      border-radius:10px;
+      margin-bottom:18px;
+    }
+
+    .login-tab{
+      flex:1;
+      border:none;
+      background:transparent;
+      padding:9px;
+      border-radius:8px;
+      cursor:pointer;
+      font-weight:700;
+      color:var(--ink-soft);
+      font-family:inherit;
+    }
+
+    .login-tab.active{
+      background:#fff;
+      color:var(--ink);
+      box-shadow:0 2px 8px rgba(0,0,0,.05);
+    }
+
+    .field{
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+      margin-bottom:13px;
+    }
+
+    .field label{
+      font-size:.78rem;
+      font-weight:700;
+      color:var(--ink-soft);
+    }
+
+    .field input{
+      width:100%;
+      padding:11px 13px;
+      border:1px solid var(--accent-line);
+      border-radius:10px;
+      background:var(--bg);
+      color:var(--ink);
+      outline:none;
+    }
+
+    .field input:focus{
+      border-color:var(--accent);
+      box-shadow:0 0 0 3px rgba(232,147,179,.15);
+    }
+
+    .auth-message{
+      min-height:22px;
+      font-size:.76rem;
+      color:var(--accent-deep);
+      margin:3px 0 8px;
+    }
+
+    .modal-submit{
+      width:100%;
+      border-radius:11px;
+    }
+
+    /* ---------------- FOOTER ---------------- */
+
+    footer{
+      margin-top:40px;
+      padding:55px 0 28px;
+      background:var(--ink);
+      color:#EFD8E2;
+    }
+
+    .footer-grid{
+      display:grid;
+      grid-template-columns:1.3fr 1fr 1fr 1fr;
+      gap:36px;
+      margin-bottom:40px;
+    }
+
+    footer h5{
+      color:#fff;
+      font-size:.95rem;
+      margin:0 0 15px;
+    }
+
+    footer p{
+      margin:0;
+      color:#C9A6B7;
+      line-height:1.9;
+      font-size:.84rem;
+      max-width:300px;
+    }
+
+    footer ul{
+      list-style:none;
+      padding:0;
+      margin:0;
+      display:flex;
+      flex-direction:column;
+      gap:9px;
+    }
+
+    footer ul a{
+      color:#D9B7C6;
+      font-size:.84rem;
+    }
+
+    footer ul a:hover{
+      color:#fff;
+    }
+
+    .footer-bottom{
+      border-top:1px solid rgba(255,255,255,.12);
+      padding-top:20px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:16px;
+      color:#B98FA3;
+      font-size:.75rem;
+    }
+
+    /* ---------------- EMPTY ---------------- */
+
+    .empty{
+      text-align:center;
+      padding:30px;
+      border:1px dashed var(--accent-line);
+      border-radius:16px;
+      color:var(--ink-faint);
+      background:var(--card);
+    }
+
+    /* ---------------- RESPONSIVE ---------------- */
+
+    @media (max-width:1050px){
+      .nav-links{
+        display:none;
+      }
+
+      .hero-grid{
+        grid-template-columns:1fr;
+      }
+
+      .hero-feature{
+        order:-1;
+      }
+
+      .rank-grid{
+        grid-template-columns:repeat(2,1fr);
+      }
+
+      .newest-grid{
+        grid-template-columns:repeat(3,1fr);
+      }
+
+      .footer-grid{
+        grid-template-columns:1fr 1fr;
+      }
+    }
+
+    @media (max-width:600px){
+      .wrap{
+        padding:0 18px;
+      }
+
+      .nav-inner{
+        min-height:68px;
+      }
+
+      .logo{
+        font-size:1.15rem;
+      }
+
+      .nav-actions .btn{
+        display:none;
+      }
+
+      .hero{
+        padding-top:45px;
+      }
+
+      .hero h1{
+        font-size:2.15rem;
+      }
+
+      .feature-poster{
+        min-height:240px;
+      }
+
+      .rank-grid{
+        grid-template-columns:1fr 1fr;
+        gap:12px;
+      }
+
+      .rank-poster{
+        height:180px;
+      }
+
+      .newest-grid{
+        grid-template-columns:1fr 1fr;
+      }
+
+      .footer-grid{
+        grid-template-columns:1fr;
+      }
+
+      .footer-bottom{
+        flex-direction:column;
+        align-items:flex-start;
+      }
+    }
+
+    @media (prefers-reduced-motion:reduce){
+      *{
+        animation:none !important;
+        transition:none !important;
+        scroll-behavior:auto !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header class="navbar">
+  <div class="wrap nav-inner">
+
+    <a class="logo" href="index.html">
+      <span class="mark">MFA</span>
+      مای‌فیوریت‌انیمه
+    </a>
+
+    <nav class="nav-links">
+      <a href="index.html">خانه</a>
+      <a href="index.html#airing">در حال پخش</a>
+      <a href="search.html">جستجو</a>
+      <a href="index.html#toprated">محبوب‌ترین</a>
+      <a href="index.html#newest">جدیدترین</a>
+    </nav>
+
+    <div class="nav-actions">
+      <a class="icon-btn" href="search.html" title="جستجو">⌕</a>
+      <button class="btn btn-primary" id="authButton">ورود / ثبت‌نام</button>
+    </div>
+
+  </div>
+</header>
+
+<section class="hero">
+
+  <div class="petal-field" id="petalField"></div>
+
+  <div class="wrap hero-grid">
+
+    <div>
+      <div class="eyebrow">دانشنامه‌ی انیمه، به زبان فارسی</div>
+
+      <h1>
+        هر انیمه، با
+        <em>جزئیات</em>
+        کامل و بی‌نقص
+      </h1>
+
+      <p class="hero-text">
+        معرفی، امتیازدهی و بررسی انیمه‌ها؛ از فصل‌های در حال پخش تا آثار ماندگار،
+        همه در یک آرشیو تمیز، سریع و قابل جستجو.
+      </p>
+
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="search.html">شروع کاوش</a>
+        <a class="btn btn-outline" href="search.html">فهرست کامل انیمه‌ها</a>
+      </div>
+    </div>
+
+    <a class="hero-feature" id="featuredLink" href="anime-detail.html">
+
+      <div
+        class="feature-poster"
+        id="featuredPoster"
+      >
+        <div class="feature-overlay"></div>
+        <span class="feature-tag">انتخاب سردبیر</span>
+      </div>
+
+      <div class="feature-meta">
+        <div>
+          <h3 id="featuredTitle">سایه‌های اسپاراد</h3>
+          <div class="jp" id="featuredJp">スパラードの影</div>
+        </div>
+
+        <div class="stars" id="featuredScore">★ ۹.۲</div>
+      </div>
+
+    </a>
+
+  </div>
+</section>
+
+<div class="wrap ad-wrap">
+  <div class="ad-banner">
+    <span class="label">تبلیغات</span>
+    <span>فضای بنر تبلیغاتی — ۷۲۸ × ۹۰</span>
+    <span>مناسب برای تبلیغات سایت و اسپانسر</span>
+  </div>
+</div>
+
+<section class="block" id="airing">
+  <div class="wrap">
+
+    <div class="block-head">
+      <div>
+        <h2>در حال پخش این فصل</h2>
+        <div class="sub">قسمت‌های تازه، مرتب در سایت به‌روزرسانی می‌شوند</div>
+      </div>
+
+      <a class="see-all" href="search.html?status=در حال پخش">
+        مشاهده همه ›
+      </a>
+    </div>
+
+    <div class="hscroll" id="airingScroll"></div>
+
+  </div>
+</section>
+
+<section class="block alt" id="toprated">
+  <div class="wrap">
+
+    <div class="block-head">
+      <div>
+        <h2>محبوب‌ترین انیمه‌ها</h2>
+        <div class="sub">رتبه‌بندی بر اساس امتیاز کاربران MFA</div>
+      </div>
+
+      <a class="see-all" href="search.html?sort=score">
+        مشاهده همه ›
+      </a>
+    </div>
+
+    <div class="rank-grid" id="rankGrid"></div>
+
+  </div>
+</section>
+
+<section class="block" id="newest">
+  <div class="wrap">
+
+    <div class="block-head">
+      <div>
+        <h2>جدیدترین‌ها</h2>
+        <div class="sub">تازه‌ترین انیمه‌های ثبت‌شده در آرشیو</div>
+      </div>
+
+      <a class="see-all" href="search.html?sort=newest">
+        مشاهده همه ›
+      </a>
+    </div>
+
+    <div class="newest-grid" id="newestGrid"></div>
+
+  </div>
+</section>
+
+<section class="block">
+  <div class="wrap">
+
+    <div class="block-head">
+      <div>
+        <h2>مرور بر اساس ژانر</h2>
+        <div class="sub">انیمه مورد علاقه‌ات را از دل هر ژانر پیدا کن</div>
+      </div>
+    </div>
+
+    <div class="genre-row">
+
+      <a class="genre-chip" href="search.html?genre=اکشن">اکشن</a>
+      <a class="genre-chip" href="search.html?genre=فانتزی">فانتزی</a>
+      <a class="genre-chip" href="search.html?genre=درام">درام</a>
+      <a class="genre-chip" href="search.html?genre=رمانتیک">رمانتیک</a>
+      <a class="genre-chip" href="search.html?genre=ورزشی">ورزشی</a>
+      <a class="genre-chip" href="search.html?genre=علمی‌تخیلی">علمی‌تخیلی</a>
+      <a class="genre-chip" href="search.html?genre=کمدی">کمدی</a>
+      <a class="genre-chip" href="search.html?genre=اسلایس‌آف‌لایف">اسلایس‌آف‌لایف</a>
+      <a class="genre-chip" href="search.html?genre=وحشت">وحشت</a>
+      <a class="genre-chip" href="search.html?genre=ماجراجویی">ماجراجویی</a>
+
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+
+    <div class="footer-grid">
+
+      <div>
+        <h5>درباره MFA</h5>
+        <p>
+          مای‌فیوریت‌انیمه یک دانشنامه‌ی فارسی‌زبان برای معرفی،
+          بررسی و امتیازدهی انیمه‌هاست؛ جایی برای کشف عمیق‌تر دنیای انیمه.
+        </p>
+      </div>
+
+      <div>
+        <h5>لینک‌های مفید</h5>
+        <ul>
+          <li><a href="index.html">خانه</a></li>
+          <li><a href="search.html">جستجوی انیمه</a></li>
+          <li><a href="anime-detail.html">صفحه انیمه</a></li>
+          <li><a href="admin.html">پنل مدیریت</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h5>دسته‌بندی‌ها</h5>
+        <ul>
+          <li><a href="search.html?status=در حال پخش">در حال پخش</a></li>
+          <li><a href="search.html?sort=score">محبوب‌ترین‌ها</a></li>
+          <li><a href="search.html?genre=فانتزی">فانتزی</a></li>
+          <li><a href="search.html?genre=اکشن">اکشن</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h5>حساب کاربری</h5>
+        <ul>
+          <li><a href="#" id="footerLogin">ورود / ثبت‌نام</a></li>
+          <li><a href="admin.html">مدیریت سایت</a></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+      <span>© ۱۴۰۵ MFA — تمامی حقوق محفوظ است</span>
+      <span>ساخته‌شده با ❤ برای عاشقان انیمه</span>
+    </div>
+
+  </div>
+</footer>
+
+<!-- LOGIN / REGISTER MODAL -->
+
+<div class="modal" id="authModal">
+
+  <div class="modal-card">
+
+    <div class="modal-head">
+      <h3 id="authTitle">ورود به حساب</h3>
+      <button class="close-btn" id="closeAuth">×</button>
+    </div>
+
+    <div class="login-tabs">
+      <button class="login-tab active" id="loginTab">ورود</button>
+      <button class="login-tab" id="registerTab">ثبت‌نام</button>
+    </div>
+
+    <form id="authForm">
+
+      <div class="field">
+        <label for="username">نام کاربری</label>
+        <input id="username" autocomplete="username" required>
+      </div>
+
+      <div class="field">
+        <label for="password">رمز عبور</label>
+        <input id="password" type="password" autocomplete="current-password" required>
+      </div>
+
+      <div class="auth-message" id="authMessage"></div>
+
+      <button class="btn btn-primary modal-submit" type="submit" id="authSubmit">
+        ورود
+      </button>
+
+    </form>
+
+  </div>
+
+</div>
+
+<script>
+  const palettes = [
+    'linear-gradient(160deg,#F7D8E4,#D97BA2)',
+    'linear-gradient(160deg,#E7C4E0,#B678B0)',
+    'linear-gradient(160deg,#F3E0C7,#D9A25D)',
+    'linear-gradient(160deg,#CDE0D8,#7FA98F)',
+    'linear-gradient(160deg,#F6C9C9,#C97070)',
+    'linear-gradient(160deg,#D8D6F3,#8A85C9)'
+  ];
+
+  function toFaNumber(value){
+    return String(value)
+      .replace(/0/g,'۰')
+      .replace(/1/g,'۱')
+      .replace(/2/g,'۲')
+      .replace(/3/g,'۳')
+      .replace(/4/g,'۴')
+      .replace(/5/g,'۵')
+      .replace(/6/g,'۶')
+      .replace(/7/g,'۷')
+      .replace(/8/g,'۸')
+      .replace(/9/g,'۹');
+  }
+
+  function getToken(){
+    return localStorage.getItem('mfa_token') || '';
+  }
+
+  function getAnimeUrl(id){
+    return `anime-detail.html?id=${encodeURIComponent(id)}`;
+  }
+
+  function applyPoster(element, anime, index = 0){
+    element.style.backgroundImage = anime.poster
+      ? `url("${anime.poster}")`
+      : palettes[index % palettes.length];
+
+    if(anime.poster){
+      element.classList.add('has-image');
+    }
+  }
+
+  async function fetchAnime(){
+    try{
+      const response = await fetch('/api/anime?sort=newest');
+
+      if(!response.ok){
+        throw new Error('API error');
+      }
+
+      const result = await response.json();
+      return result.data || [];
+    }catch(error){
+      console.error(error);
+      return [];
+    }
+  }
+
+  function renderFallback(){
+    const fallback = [
+      {
+        id:1,
+        title:'خط شکن آسمان',
+        jp_title:'空の破断線',
+        genres:'اکشن · فانتزی',
+        status:'در حال پخش',
+        score:9.0
+      },
+      {
+        id:2,
+        title:'زمزمه‌های کاگه',
+        jp_title:'影の囁き',
+        genres:'رمزآلود · درام',
+        status:'در حال پخش',
+        score:8.6
+      },
+      {
+        id:3,
+        title:'باشگاه ستاره صبح',
+        jp_title:'朝星クラブ',
+        genres:'ورزشی',
+        status:'در حال پخش',
+        score:8.4
+      },
+      {
+        id:4,
+        title:'دفترچه هزار فصل',
+        jp_title:'千季ノート',
+        genres:'اسلایس‌آف‌لایف',
+        status:'در حال پخش',
+        score:8.3
+      },
+      {
+        id:5,
+        title:'مریدیان سرخ',
+        jp_title:'紅の子午線',
+        genres:'علمی‌تخیلی',
+        status:'در حال پخش',
+        score:8.7
+      },
+      {
+        id:6,
+        title:'باغ ون‌یو',
+        jp_title:'ヴァンユウの庭',
+        genres:'فانتزی · درام',
+        status:'پایان‌یافته',
+        score:8.8
+      }
+    ];
+
+    renderHome(fallback);
+  }
+
+  function renderHome(animes){
+    const airingScroll = document.getElementById('airingScroll');
+    const rankGrid = document.getElementById('rankGrid');
+    const newestGrid = document.getElementById('newestGrid');
+
+    airingScroll.innerHTML = '';
+    rankGrid.innerHTML = '';
+    newestGrid.innerHTML = '';
+
+    const featured =
+      animes.slice().sort((a,b)=>(b.score || 0) - (a.score || 0))[0]
+      || {
+        id:1,
+        title:'سایه‌های اسپاراد',
+        jp_title:'スパラードの影',
+        score:9.2
+      };
+
+    document.getElementById('featuredTitle').textContent =
+      featured.title || 'سایه‌های اسپاراد';
+
+    document.getElementById('featuredJp').textContent =
+      featured.jp_title || 'スパラードの影';
+
+    document.getElementById('featuredScore').textContent =
+      `★ ${toFaNumber(Number(featured.score || 0).toFixed(1))}`;
+
+    document.getElementById('featuredLink').href =
+      getAnimeUrl(featured.id || 1);
+
+    applyPoster(
+      document.getElementById('featuredPoster'),
+      featured,
+      0
+    );
+
+    const airing = animes
+      .filter(a => a.status === 'در حال پخش')
+      .slice(0,8);
+
+    if(!airing.length){
+      airingScroll.innerHTML = `
+        <div class="empty">
+          هنوز انیمه‌ای در حال پخش ثبت نشده است.
+        </div>
+      `;
+    }else{
+      airing.forEach((anime,index)=>{
+        const card = document.createElement('a');
+        card.className = 'airing-card';
+        card.href = getAnimeUrl(anime.id);
+
+        const thumb = document.createElement('div');
+        thumb.className = 'airing-thumb';
+
+        applyPoster(thumb,anime,index);
+
+        thumb.innerHTML += `
+          <span class="ep-badge">${anime.episode || 'جدید'}</span>
+          <span class="live">
+            <span class="live-dot"></span>
+            پخش
+          </span>
+        `;
+
+        card.innerHTML = '';
+        card.appendChild(thumb);
+
+        const body = document.createElement('div');
+        body.className = 'airing-body';
+
+        const title = document.createElement('h4');
+        title.textContent = anime.title;
+
+        const genre = document.createElement('div');
+        genre.className = 'genre';
+        genre.textContent = anime.genres || 'بدون ژانر';
+
+        body.appendChild(title);
+        body.appendChild(genre);
+
+        card.appendChild(body);
+        airingScroll.appendChild(card);
+      });
+    }
+
+    const ranked = animes
+      .slice()
+      .sort((a,b)=>(Number(b.score)||0) - (Number(a.score)||0))
+      .slice(0,8);
+
+    if(!ranked.length){
+      rankGrid.innerHTML = `
+        <div class="empty">
+          هنوز داده‌ای برای رتبه‌بندی وجود ندارد.
+        </div>
+      `;
+    }else{
+      ranked.forEach((anime,index)=>{
+        const card = document.createElement('a');
+        card.className = 'rank-card';
+        card.href = getAnimeUrl(anime.id);
+
+        const poster = document.createElement('div');
+        poster.className = 'rank-poster';
+
+        applyPoster(poster,anime,index);
+
+        poster.innerHTML = `
+          <div class="rank-num">${index + 1}</div>
+        `;
+
+        const body = document.createElement('div');
+        body.className = 'rank-body';
+
+        body.innerHTML = `
+          <h4></h4>
+          <div class="rank-foot">
+            <span class="stars">★ ${toFaNumber(Number(anime.score || 0).toFixed(1))}</span>
+            <span class="genre-pill"></span>
+          </div>
+        `;
+
+        body.querySelector('h4').textContent = anime.title || 'بدون عنوان';
+        body.querySelector('.genre-pill').textContent =
+          (anime.genres || 'بدون ژانر').split(/[،,·]/)[0].trim();
+
+        card.appendChild(poster);
+        card.appendChild(body);
+        rankGrid.appendChild(card);
+      });
+    }
+
+    const newest = animes.slice(0,6);
+
+    if(!newest.length){
+      newestGrid.innerHTML = `
+        <div class="empty">
+          هنوز انیمه‌ای اضافه نشده است.
+        </div>
+      `;
+    }else{
+      newest.forEach((anime,index)=>{
+        const card = document.createElement('a');
+        card.className = 'newest-card';
+        card.href = getAnimeUrl(anime.id);
+
+        const thumb = document.createElement('div');
+        thumb.className = 'newest-thumb';
+
+        applyPoster(thumb,anime,index);
+
+        const body = document.createElement('div');
+        body.className = 'newest-body';
+
+        const title = document.createElement('h5');
+        title.textContent = anime.title || 'بدون عنوان';
+
+        const year = document.createElement('div');
+        year.className = 'yr';
+        year.textContent = anime.year || 'جدید';
+
+        body.appendChild(title);
+        body.appendChild(year);
+
+        card.appendChild(thumb);
+        card.appendChild(body);
+
+        newestGrid.appendChild(card);
+      });
+    }
+  }
+
+  /* ---------------- AUTH ---------------- */
+
+  const authModal = document.getElementById('authModal');
+  const authButton = document.getElementById('authButton');
+  const footerLogin = document.getElementById('footerLogin');
+  const closeAuth = document.getElementById('closeAuth');
+
+  const loginTab = document.getElementById('loginTab');
+  const registerTab = document.getElementById('registerTab');
+
+  const authTitle = document.getElementById('authTitle');
+  const authSubmit = document.getElementById('authSubmit');
+  const authForm = document.getElementById('authForm');
+  const authMessage = document.getElementById('authMessage');
+
+  let authMode = 'login';
+
+  function updateAuthState(){
+    const token = getToken();
+
+    if(token){
+      authButton.textContent = 'خروج';
+      footerLogin.textContent = 'خروج از حساب';
+    }else{
+      authButton.textContent = 'ورود / ثبت‌نام';
+      footerLogin.textContent = 'ورود / ثبت‌نام';
+    }
+  }
+
+  function openAuth(mode='login'){
+    authMode = mode;
+
+    authModal.classList.add('show');
+    authMessage.textContent = '';
+
+    loginTab.classList.toggle('active', mode === 'login');
+    registerTab.classList.toggle('active', mode === 'register');
+
+    authTitle.textContent =
+      mode === 'login'
+      ? 'ورود به حساب'
+      : 'ساخت حساب جدید';
+
+    authSubmit.textContent =
+      mode === 'login'
+      ? 'ورود'
+      : 'ثبت‌نام';
+  }
+
+  function closeAuthModal(){
+    authModal.classList.remove('show');
+    authForm.reset();
+    authMessage.textContent = '';
+  }
+
+  async function handleAuth(event){
+    event.preventDefault();
+
+    const username =
+      document.getElementById('username').value.trim();
+
+    const password =
+      document.getElementById('password').value;
+
+    authMessage.textContent = 'در حال انجام...';
+
+    try{
+      const endpoint =
+        authMode === 'login'
+        ? '/api/login'
+        : '/api/register';
+
+      const response = await fetch(endpoint,{
+        method:'POST',
+        headers:{
+          'Content-Type':'application/json'
+        },
+        body:JSON.stringify({
+          username,
+          password
+        })
+      });
+
+      const data = await response.json();
+
+      if(!response.ok){
+        throw new Error(data.error || 'خطا در عملیات');
+      }
+
+      if(authMode === 'login'){
+        localStorage.setItem('mfa_token',data.token);
+
+        authMessage.textContent =
+          'ورود با موفقیت انجام شد.';
+
+        updateAuthState();
+
+        setTimeout(()=>{
+          closeAuthModal();
+
+          if(data.user?.role === 'admin'){
+            window.location.href = 'admin.html';
+          }
+        },500);
+      }else{
+        authMessage.textContent =
+          'ثبت‌نام موفق بود. حالا وارد حساب شو.';
+
+        authMode = 'login';
+        loginTab.classList.add('active');
+        registerTab.classList.remove('active');
+        authTitle.textContent = 'ورود به حساب';
+        authSubmit.textContent = 'ورود';
+      }
+
+    }catch(error){
+      console.error(error);
+      authMessage.textContent =
+        error.message || 'خطایی رخ داد.';
+    }
+  }
+
+  authButton.addEventListener('click',()=>{
+    if(getToken()){
+      localStorage.removeItem('mfa_token');
+      updateAuthState();
+      alert('از حساب خارج شدی.');
+    }else{
+      openAuth('login');
+    }
+  });
+
+  footerLogin.addEventListener('click',(event)=>{
+    event.preventDefault();
+
+    if(getToken()){
+      localStorage.removeItem('mfa_token');
+      updateAuthState();
+      alert('از حساب خارج شدی.');
+    }else{
+      openAuth('login');
+    }
+  });
+
+  loginTab.addEventListener('click',()=>openAuth('login'));
+  registerTab.addEventListener('click',()=>openAuth('register'));
+
+  closeAuth.addEventListener('click',closeAuthModal);
+
+  authModal.addEventListener('click',(event)=>{
+    if(event.target === authModal){
+      closeAuthModal();
+    }
+  });
+
+  authForm.addEventListener('submit',handleAuth);
+
+  /* ---------------- PETALS ---------------- */
+
+  const petalField = document.getElementById('petalField');
+
+  if(
+    !window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  ){
+    for(let i=0;i<10;i++){
+      const petal = document.createElement('div');
+
+      petal.className = 'petal';
+
+      petal.style.right =
+        `${Math.random() * 100}%`;
+
+      petal.style.animationDuration =
+        `${7 + Math.random() * 6}s`;
+
+      petal.style.animationDelay =
+        `${Math.random() * 8}s`;
+
+      petal.style.opacity =
+        `${0.3 + Math.random() * 0.4}`;
+
+      petalField.appendChild(petal);
+    }
+  }
+
+  /* ---------------- START ---------------- */
+
+  (async()=>{
+    updateAuthState();
+
+    const animes = await fetchAnime();
+
+    if(animes.length){
+      renderHome(animes);
+    }else{
+      renderFallback();
+    }
+  })();
+</script>
+
+</body>
+</html>

@@ -1,18 +1,1983 @@
-<!doctype html><html lang="fa" dir="rtl"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>پنل مدیریت | MFA</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100..900&display=swap" rel="stylesheet"><style>
-:root{--bg:#fffbfc;--bg2:#fdf2f7;--card:#fff;--ink:#2a1220;--soft:#7a5a69;--faint:#b98fa3;--a:#e893b3;--deep:#c15c86;--line:#f0d2df;--green:#3fae73;--red:#d9536b;--shadow:0 18px 40px -22px rgba(193,92,134,.35)}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Vazirmatn,sans-serif}.shell{display:flex;min-height:100vh}.side{width:248px;flex:0 0 248px;background:var(--ink);color:#efd8e2;padding:24px 18px;position:sticky;top:0;height:100vh}.brand{font-weight:800;font-size:1.2rem;color:#fff}.brand b{font-family:Georgia,serif;font-style:italic;color:var(--a)}.sub{font-size:.72rem;color:var(--faint);margin:5px 0 30px}.label{font-size:.68rem;color:var(--faint);margin:20px 10px 8px}.nav{display:block;padding:11px 12px;border-radius:10px;color:#d9b7c6;margin:2px 0;cursor:pointer}.nav:hover{background:rgba(255,255,255,.06);color:#fff}.nav.active{background:var(--a);color:#fff}.foot{position:absolute;bottom:24px;right:18px;left:18px;border-top:1px solid rgba(255,255,255,.1);padding-top:18px;color:#fff;font-size:.8rem}.main{flex:1;min-width:0}.top{height:74px;background:rgba(255,251,252,.92);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:5;display:flex;align-items:center;justify-content:space-between;padding:0 30px;gap:14px}.top h1{font-size:1.15rem;margin:0}.path{font-size:.75rem;color:var(--faint)}.actions{display:flex;gap:10px}.btn{border:0;border-radius:10px;padding:10px 18px;font-weight:700;cursor:pointer}.primary{background:var(--ink);color:#fff}.ghost{border:1px solid var(--line);background:#fff;color:var(--soft)}.content{padding:30px;display:grid;gap:28px}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}.stat{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px}.stat .k{color:var(--soft);font-size:.78rem}.stat .v{font-size:1.65rem;font-weight:800;margin:8px 0}.up{color:var(--green);font-size:.73rem;font-weight:700}.down{color:var(--red);font-size:.73rem;font-weight:700}.panel{background:#fff;border:1px solid var(--line);border-radius:18px;padding:24px}.panelhead{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:20px}.panelhead h2{font-size:1rem;margin:0}.panelhead small{display:block;color:var(--faint);margin-top:3px}.bars{height:180px;display:flex;align-items:flex-end;gap:12px}.barcol{flex:1;height:100%;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:7px}.bar{width:100%;max-width:34px;border-radius:8px 8px 3px 3px;background:linear-gradient(180deg,var(--a),var(--deep))}.day{font-size:.67rem;color:var(--faint)}.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:15px}.field{display:grid;gap:6px}.field.full{grid-column:1/-1}.field label{font-size:.78rem;color:var(--soft);font-weight:700}.field input,.field select,.field textarea{width:100%;border:1px solid var(--line);border-radius:10px;background:var(--bg);padding:10px 13px;color:var(--ink);outline:0}.field textarea{min-height:100px;resize:vertical}.upload{border:1.5px dashed var(--line);background:var(--bg2);padding:24px;text-align:center;border-radius:12px;color:var(--faint);cursor:pointer}.preview{display:none;margin-top:12px}.preview img{max-height:180px;max-width:100%;margin:auto;border-radius:12px}.tablewrap{overflow:auto}.table{width:100%;border-collapse:collapse;font-size:.82rem}.table th,.table td{text-align:right;padding:11px 9px;border-bottom:1px solid var(--bg2);white-space:nowrap}.table th{color:var(--faint);font-size:.72rem}.badge{padding:4px 9px;border-radius:999px;font-size:.68rem;font-weight:700}.air{background:#e4f6ec;color:var(--green)}.done{background:var(--bg2);color:var(--faint)}.del{border:0;background:transparent;color:var(--red);cursor:pointer;font-weight:700}.edit{border:0;background:transparent;color:var(--deep);cursor:pointer;font-weight:700}.msg{display:none;padding:10px 14px;border-radius:10px;background:#e7f6ed;color:#2f8e5d;margin-bottom:15px;font-size:.8rem}.filterinput{border:1px solid var(--line);border-radius:9px;padding:8px 12px;min-width:200px}.twocol{display:grid;grid-template-columns:1.4fr 1fr;gap:22px}.comments{display:grid;gap:12px}.comment{padding:13px 0;border-bottom:1px solid var(--bg2)}.comment:last-child{border-bottom:0}.comment strong{font-size:.82rem}.comment p{color:var(--soft);font-size:.78rem;line-height:1.7;margin:5px 0}.comment button{border:0;background:transparent;cursor:pointer;margin-left:12px;font-size:.72rem;font-weight:700}.approve{color:var(--green)}.remove{color:var(--red)}
-@media(max-width:1080px){.stats{grid-template-columns:repeat(2,1fr)}.twocol{grid-template-columns:1fr}.formgrid{grid-template-columns:1fr}}@media(max-width:760px){.side{display:none}.content{padding:18px}.stats{grid-template-columns:1fr}.top{padding:0 18px}.top .path{display:none}.formgrid{grid-template-columns:1fr}.filterinput{min-width:0;width:100%}}
-</style></head><body><div class="shell"><aside class="side"><div class="brand"><b>MFA</b> پنل مدیریت</div><div class="sub">مای‌فیوریت‌انیمه</div><div class="label">نمای کلی</div><a class="nav active" href="admin.html">◇ داشبورد</a><div class="label">محتوا</div><a class="nav" href="#form">✎ افزودن / ویرایش انیمه</a><a class="nav" href="#list">☰ فهرست انیمه‌ها</a><a class="nav" href="search.html">⌕ مشاهده آرشیو</a><div class="label">جامعه کاربری</div><a class="nav" href="#comments">✦ مدیریت نظرات</a><div class="foot">مدیر سایت<br><span style="color:var(--faint)">نسخه محلی / نمایشی</span></div></aside><main class="main"><header class="top"><div><h1>داشبورد مدیریت MFA</h1><div class="path">پنل مدیریت ‹ نمای کلی</div></div><div class="actions"><a class="btn ghost" href="index.html">مشاهده سایت</a><button class="btn primary" id="newBtn">+ انیمه جدید</button></div></header><div class="content"><div class="stats"><div class="stat"><div class="k">بازدید امروز</div><div class="v">۱۲,۴۸۰</div><div class="up">▲ ۸.۴٪ نسبت به دیروز</div></div><div class="stat"><div class="k">کاربران فعال</div><div class="v">۳,۲۰۶</div><div class="up">▲ ۳.۱٪</div></div><div class="stat"><div class="k">نظرات در انتظار</div><div class="v" id="commentCount">۲۷</div><div class="down">▼ نیازمند بررسی</div></div><div class="stat"><div class="k">انیمه‌های ثبت‌شده</div><div class="v" id="animeCount">۱,۹۴۴</div><div class="up">▲ با ذخیره محلی</div></div></div>
-<div class="panel"><div class="panelhead"><div><h2>آمار بازدید هفتگی</h2><small>تعداد بازدیدکننده‌های یکتا</small></div><button class="btn ghost" id="reportBtn">دانلود گزارش</button></div><div class="bars" id="bars"></div></div>
-<div class="panel" id="form"><div class="panelhead"><div><h2>افزودن انیمه جدید</h2><small>این فرم در مرورگر فعلی ذخیره می‌شود و فوراً در سایت قابل جستجو خواهد بود.</small></div></div><div id="msg" class="msg"></div><form id="animeForm"><div class="formgrid"><div class="field"><label>عنوان فارسی</label><input required id="title"></div><div class="field"><label>عنوان ژاپنی / اصلی</label><input id="jp"></div><div class="field"><label>امتیاز</label><input id="score" type="number" min="0" max="10" step="0.1" value="8"></div><div class="field"><label>ژانرها</label><input id="genre" placeholder="فانتزی، اکشن"></div><div class="field"><label>وضعیت پخش</label><select id="status"><option>در حال پخش</option><option>پایان‌یافته</option><option>اعلام‌شده</option></select></div><div class="field"><label>سال</label><input id="year" value="۱۴۰۵"></div><div class="field full"><label>خلاصه داستان</label><textarea id="summary" placeholder="خلاصه داستان..."></textarea></div><div class="field full"><label>پوستر</label><label class="upload" for="poster">برای انتخاب تصویر کلیک کن<input hidden type="file" id="poster" accept="image/*"></label><div class="preview" id="preview"><img id="previewImg"></div></div></div><div style="display:flex;gap:10px;margin-top:20px"><button class="btn primary" type="submit">انتشار انیمه</button><button class="btn ghost" type="button" id="draft">ذخیره پیش‌نویس</button></div></form></div>
-<div class="panel" id="list"><div class="panelhead"><div><h2>انیمه‌های ثبت‌شده در این مرورگر</h2><small>ویرایش و حذف بدون نیاز به سرور</small></div><input class="filterinput" id="filter" placeholder="جستجو..."></div><div class="tablewrap"><table class="table"><thead><tr><th>عنوان</th><th>ژانر</th><th>وضعیت</th><th>امتیاز</th><th>عملیات</th></tr></thead><tbody id="tbody"></tbody></table></div></div>
-<div class="twocol" id="comments"><div class="panel"><div class="panelhead"><div><h2>مدیریت نظرات</h2><small>نمونه تعامل مدیریتی</small></div></div><div class="comments" id="commentsList"></div></div><div class="panel"><div class="panelhead"><div><h2>کاربران</h2><small>نمونه داده مدیریتی</small></div></div><table class="table"><tbody><tr><td>نگین.ک</td><td>۳۴ نظر</td><td><span class="badge air">فعال</span></td></tr><tr><td>آرمان_۷۸</td><td>۱۲ نظر</td><td><span class="badge air">فعال</span></td></tr><tr><td>ستاره_شب</td><td>۵۸ نظر</td><td><span class="badge air">فعال</span></td></tr><tr><td>کاربر_مهمان۹</td><td>۲ نظر</td><td><span class="badge done">مسدود</span></td></tr></tbody></table></div></div>
-</div></main></div>
-<script>
-const key='mfaAnime';let items=JSON.parse(localStorage.getItem(key)||'[]');const fa=n=>String(n).replace(/\d/g,d=>'۰۱۲۳۴۵۶۷۸۹'[d]);
-const bars=[62,74,58,88,70,95,100],days=['شنبه','یکشنبه','دوشنبه','سه‌شنبه','چهارشنبه','پنجشنبه','جمعه'];document.getElementById('bars').innerHTML=bars.map((v,i)=>`<div class="barcol"><div class="bar" style="height:${v*1.45}px"></div><div class="day">${days[i]}</div></div>`).join('');
-function save(){localStorage.setItem(key,JSON.stringify(items));document.getElementById('animeCount').textContent=fa(1944+items.length)}function render(){const q=document.getElementById('filter').value.trim().toLowerCase();const body=document.getElementById('tbody');const list=items.filter(x=>x.t.toLowerCase().includes(q));body.innerHTML=list.length?list.map((x,i)=>`<tr><td>${x.t}<div style="font-size:.7rem;color:var(--faint)">${x.jp||''}</div></td><td>${x.g.join('، ')}</td><td><span class="badge ${x.status==='در حال پخش'?'air':'done'}">${x.status}</span></td><td>★ ${x.score}</td><td><button class="edit" onclick="editItem(${i})">ویرایش</button><button class="del" onclick="deleteItem(${i})">حذف</button></td></tr>`).join(''):`<tr><td colspan="5" style="color:var(--faint);text-align:center">هنوز انیمه‌ای توسط این پنل ذخیره نشده است.</td></tr>`;save()}window.editItem=i=>{const x=items[i];document.getElementById('title').value=x.t;document.getElementById('jp').value=x.jp||'';document.getElementById('score').value=x.score;document.getElementById('genre').value=x.g.join('، ');document.getElementById('status').value=x.status;document.getElementById('year').value=x.year||'۱۴۰۵';document.getElementById('summary').value=x.summary||'';document.getElementById('animeForm').dataset.edit=String(i);location.hash='form'};window.deleteItem=i=>{if(confirm('این انیمه حذف شود؟')){items.splice(i,1);save();render()}};
-const form=document.getElementById('animeForm');form.addEventListener('submit',e=>{e.preventDefault();const x={t:title.value.trim(),jp:jp.value.trim(),score:+score.value,g:genre.value.split(/[،,]/).map(s=>s.trim()).filter(Boolean),status:status.value,year:year.value,summary:summary.value,added:Date.now()};const idx=form.dataset.edit;if(idx!==undefined&&idx!==''){items[+idx]=x;delete form.dataset.edit}else items.unshift(x);save();render();form.reset();score.value=8;year.value='۱۴۰۵';const m=document.getElementById('msg');m.textContent='انیمه با موفقیت در مرورگر ذخیره شد و در سایت/جستجو نمایش داده می‌شود.';m.style.display='block';setTimeout(()=>m.style.display='none',3000);location.hash='list'});document.getElementById('draft').onclick=()=>alert('پیش‌نویس در این نسخه ذخیره دائمی نمی‌شود؛ برای انتشار از «انتشار انیمه» استفاده کن.');document.getElementById('filter').oninput=render;document.getElementById('newBtn').onclick=()=>{form.reset();delete form.dataset.edit;score.value=8;year.value='۱۴۰۵';location.hash='form'};document.getElementById('reportBtn').onclick=()=>{const csv='روز,بازدید\n'+days.map((d,i)=>`${d},${bars[i]}`).join('\n');const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));a.download='mfa-report.csv';a.click()};document.getElementById('poster').onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{document.getElementById('previewImg').src=r.result;document.getElementById('preview').style.display='block'};r.readAsDataURL(f)};
-let comments=[['نگین.ک','سایه‌های اسپاراد','قسمت جدید فوق‌العاده بود!'],['آرمان_۷۸','خط شکن آسمان','کیفیت انیمیشن این فصل واقعاً بالا رفته.'],['ستاره_شب','باغ ون‌یو','موسیقی این قسمت عالی بود.']];function renderComments(){document.getElementById('commentsList').innerHTML=comments.map((c,i)=>`<div class="comment"><strong>${c[0]}</strong><span style="color:var(--faint);font-size:.7rem"> روی «${c[1]}»</span><p>${c[2]}</p><button class="approve" onclick="approve(${i})">تأیید</button><button class="remove" onclick="removeComment(${i})">حذف</button></div>`).join('')}window.approve=i=>{comments.splice(i,1);renderComments();document.getElementById('commentCount').textContent=fa(27-comments.length)};window.removeComment=window.approve;renderComments();render();
-</script></body></html>
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>پنل مدیریت | MFA</title>
 
-<script src="app.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100..900&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg:#FFFBFC;
+      --bg-alt:#FDF2F7;
+      --card:#FFFFFF;
+      --ink:#2A1220;
+      --ink-soft:#7A5A69;
+      --ink-faint:#B98FA3;
+      --accent:#E893B3;
+      --accent-deep:#C15C86;
+      --accent-line:#F0D2DF;
+      --gold:#C9932F;
+      --green:#3FAE73;
+      --red:#D9536B;
+      --shadow:0 18px 40px -22px rgba(193,92,134,.35);
+      --sidebar-w:248px;
+    }
+
+    *{
+      box-sizing:border-box;
+    }
+
+    body{
+      margin:0;
+      background:var(--bg);
+      color:var(--ink);
+      font-family:'Vazirmatn',sans-serif;
+      -webkit-font-smoothing:antialiased;
+    }
+
+    a{
+      color:inherit;
+      text-decoration:none;
+    }
+
+    button,
+    input,
+    select,
+    textarea{
+      font-family:inherit;
+    }
+
+    .shell{
+      min-height:100vh;
+      display:flex;
+    }
+
+    /* SIDEBAR */
+
+    .sidebar{
+      width:var(--sidebar-w);
+      flex:0 0 var(--sidebar-w);
+      min-height:100vh;
+      position:sticky;
+      top:0;
+      background:var(--ink);
+      color:#EFD8E2;
+      padding:25px 20px;
+      display:flex;
+      flex-direction:column;
+    }
+
+    .brand{
+      color:#fff;
+      font-weight:800;
+      font-size:1.2rem;
+      display:flex;
+      gap:6px;
+      align-items:baseline;
+    }
+
+    .brand .mark{
+      color:var(--accent);
+      font-family:Georgia,serif;
+      font-style:italic;
+    }
+
+    .brand-sub{
+      margin-top:5px;
+      margin-bottom:30px;
+      color:var(--ink-faint);
+      font-size:.72rem;
+    }
+
+    .nav-group{
+      margin-bottom:24px;
+    }
+
+    .nav-label{
+      color:var(--ink-faint);
+      font-size:.66rem;
+      margin-bottom:8px;
+      padding:0 9px;
+      font-weight:700;
+    }
+
+    .nav-item{
+      width:100%;
+      border:0;
+      background:transparent;
+      color:#D9B7C6;
+      border-radius:10px;
+      padding:11px 12px;
+      display:flex;
+      align-items:center;
+      gap:10px;
+      cursor:pointer;
+      text-align:right;
+      font-size:.84rem;
+      margin-bottom:3px;
+      transition:.2s;
+    }
+
+    .nav-item:hover{
+      background:rgba(255,255,255,.06);
+      color:#fff;
+    }
+
+    .nav-item.active{
+      background:var(--accent);
+      color:#fff;
+    }
+
+    .nav-item .ic{
+      width:18px;
+      text-align:center;
+    }
+
+    .sidebar-foot{
+      margin-top:auto;
+      padding-top:18px;
+      border-top:1px solid rgba(255,255,255,.1);
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
+
+    .avatar{
+      width:35px;
+      height:35px;
+      border-radius:50%;
+      background:linear-gradient(155deg,#F6D3E1,#C15C86);
+      flex:0 0 35px;
+    }
+
+    .sidebar-user{
+      min-width:0;
+    }
+
+    .sidebar-user strong{
+      display:block;
+      color:#fff;
+      font-size:.8rem;
+    }
+
+    .sidebar-user span{
+      display:block;
+      color:var(--ink-faint);
+      font-size:.68rem;
+      margin-top:2px;
+    }
+
+    /* MAIN */
+
+    .main{
+      flex:1;
+      min-width:0;
+    }
+
+    .topbar{
+      min-height:74px;
+      position:sticky;
+      top:0;
+      z-index:20;
+      padding:0 30px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:18px;
+      background:rgba(255,251,252,.92);
+      backdrop-filter:blur(10px);
+      border-bottom:1px solid var(--accent-line);
+    }
+
+    .topbar h1{
+      margin:0;
+      font-size:1.15rem;
+      font-weight:800;
+    }
+
+    .path{
+      color:var(--ink-faint);
+      font-size:.74rem;
+      margin-top:3px;
+    }
+
+    .top-actions{
+      display:flex;
+      gap:9px;
+      align-items:center;
+    }
+
+    .btn{
+      border:0;
+      cursor:pointer;
+      border-radius:10px;
+      padding:10px 17px;
+      font-size:.82rem;
+      font-weight:800;
+      transition:.2s;
+    }
+
+    .btn-primary{
+      background:var(--ink);
+      color:#fff;
+    }
+
+    .btn-primary:hover{
+      background:var(--accent-deep);
+    }
+
+    .btn-ghost{
+      background:#fff;
+      border:1px solid var(--accent-line);
+      color:var(--ink-soft);
+    }
+
+    .btn-ghost:hover{
+      background:var(--bg-alt);
+    }
+
+    .btn-danger{
+      background:#FFF0F3;
+      border:1px solid #F8C8D2;
+      color:var(--red);
+    }
+
+    .content{
+      padding:30px;
+      display:flex;
+      flex-direction:column;
+      gap:24px;
+    }
+
+    /* STATS */
+
+    .stats-row{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:16px;
+    }
+
+    .stat-card{
+      background:#fff;
+      border:1px solid var(--accent-line);
+      border-radius:16px;
+      padding:20px;
+    }
+
+    .stat-card .label{
+      color:var(--ink-soft);
+      font-size:.76rem;
+      margin-bottom:7px;
+    }
+
+    .stat-card .value{
+      font-size:1.55rem;
+      font-weight:900;
+    }
+
+    .stat-card .sub{
+      margin-top:5px;
+      color:var(--ink-faint);
+      font-size:.7rem;
+    }
+
+    /* PANELS */
+
+    .panel{
+      background:#fff;
+      border:1px solid var(--accent-line);
+      border-radius:18px;
+      padding:24px;
+    }
+
+    .panel-head{
+      margin-bottom:19px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:15px;
+    }
+
+    .panel-head h2{
+      margin:0 0 3px;
+      font-size:1rem;
+    }
+
+    .panel-head .sub{
+      color:var(--ink-faint);
+      font-size:.74rem;
+    }
+
+    .message{
+      min-height:18px;
+      margin-bottom:8px;
+      color:var(--accent-deep);
+      font-size:.75rem;
+    }
+
+    /* FORM */
+
+    .form-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:15px;
+    }
+
+    .field{
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+    }
+
+    .field.full{
+      grid-column:1 / -1;
+    }
+
+    .field label{
+      color:var(--ink-soft);
+      font-size:.76rem;
+      font-weight:700;
+    }
+
+    .field input,
+    .field select,
+    .field textarea{
+      width:100%;
+      padding:10px 13px;
+      border:1px solid var(--accent-line);
+      border-radius:10px;
+      background:var(--bg);
+      color:var(--ink);
+      outline:none;
+      font-size:.82rem;
+    }
+
+    .field textarea{
+      min-height:120px;
+      resize:vertical;
+      line-height:1.8;
+    }
+
+    .field input:focus,
+    .field select:focus,
+    .field textarea:focus{
+      border-color:var(--accent);
+      box-shadow:0 0 0 3px rgba(232,147,179,.12);
+    }
+
+    .upload-row{
+      display:grid;
+      grid-template-columns:1fr auto;
+      gap:10px;
+    }
+
+    .preview{
+      height:180px;
+      margin-top:10px;
+      border-radius:13px;
+      border:1px dashed var(--accent-line);
+      background:
+        linear-gradient(155deg,#F7D8E4,#D97BA2);
+      background-size:cover;
+      background-position:center;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:#fff;
+      text-shadow:0 2px 7px rgba(0,0,0,.2);
+    }
+
+    .form-actions{
+      display:flex;
+      gap:10px;
+      margin-top:20px;
+      flex-wrap:wrap;
+    }
+
+    /* TABLE */
+
+    .table-wrap{
+      overflow:auto;
+    }
+
+    .table{
+      width:100%;
+      border-collapse:collapse;
+      font-size:.78rem;
+      min-width:750px;
+    }
+
+    .table th{
+      padding:0 9px 11px;
+      color:var(--ink-faint);
+      text-align:right;
+      border-bottom:1px solid var(--accent-line);
+      font-size:.68rem;
+    }
+
+    .table td{
+      padding:12px 9px;
+      border-bottom:1px solid var(--bg-alt);
+      vertical-align:middle;
+    }
+
+    .cell-title{
+      display:flex;
+      align-items:center;
+      gap:9px;
+      font-weight:800;
+    }
+
+    .row-thumb{
+      width:38px;
+      height:45px;
+      border-radius:8px;
+      flex:0 0 38px;
+      background:linear-gradient(155deg,#F6D3E1,#C15C86);
+      background-size:cover;
+      background-position:center;
+    }
+
+    .cell-title small{
+      display:block;
+      margin-top:2px;
+      color:var(--ink-faint);
+      font-size:.64rem;
+      font-weight:400;
+    }
+
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      padding:4px 9px;
+      border-radius:999px;
+      font-size:.62rem;
+      font-weight:800;
+    }
+
+    .badge.green{
+      color:var(--green);
+      background:#EAF7F0;
+    }
+
+    .badge.gray{
+      color:var(--ink-faint);
+      background:var(--bg-alt);
+    }
+
+    .row-actions{
+      display:flex;
+      gap:6px;
+    }
+
+    .icon-mini{
+      width:30px;
+      height:30px;
+      border-radius:8px;
+      border:1px solid var(--accent-line);
+      background:#fff;
+      color:var(--ink-soft);
+      cursor:pointer;
+    }
+
+    .icon-mini:hover{
+      background:var(--bg-alt);
+      color:var(--accent-deep);
+    }
+
+    /* COMMENTS */
+
+    .comment-row{
+      padding:13px 0;
+      border-bottom:1px solid var(--bg-alt);
+    }
+
+    .comment-row:last-child{
+      border-bottom:0;
+    }
+
+    .comment-head{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      margin-bottom:5px;
+    }
+
+    .comment-user{
+      font-size:.82rem;
+      font-weight:800;
+    }
+
+    .comment-on{
+      color:var(--ink-faint);
+      font-size:.68rem;
+    }
+
+    .comment-text{
+      color:var(--ink-soft);
+      font-size:.77rem;
+      line-height:1.8;
+      margin-bottom:8px;
+    }
+
+    .comment-actions{
+      display:flex;
+      gap:13px;
+      font-size:.7rem;
+      font-weight:800;
+    }
+
+    .approve{
+      color:var(--green);
+      cursor:pointer;
+    }
+
+    .delete{
+      color:var(--red);
+      cursor:pointer;
+    }
+
+    .empty{
+      padding:28px;
+      text-align:center;
+      color:var(--ink-faint);
+      border:1px dashed var(--accent-line);
+      border-radius:12px;
+      background:var(--bg);
+    }
+
+    /* USERS */
+
+    .user-table{
+      min-width:500px;
+    }
+
+    @media(max-width:1000px){
+      .stats-row{
+        grid-template-columns:1fr 1fr;
+      }
+
+      .form-grid{
+        grid-template-columns:1fr;
+      }
+
+      .field.full{
+        grid-column:auto;
+      }
+    }
+
+    @media(max-width:760px){
+      .sidebar{
+        display:none;
+      }
+
+      .topbar{
+        padding:0 18px;
+      }
+
+      .content{
+        padding:18px;
+      }
+
+      .stats-row{
+        grid-template-columns:1fr;
+      }
+
+      .top-actions .btn-ghost{
+        display:none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="shell">
+
+  <!-- SIDEBAR -->
+
+  <aside class="sidebar">
+
+    <div>
+      <div class="brand">
+        <span class="mark">MFA</span>
+        پنل مدیریت
+      </div>
+
+      <div class="brand-sub">
+        مای‌فیوریت‌انیمه
+      </div>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-label">نمای کلی</div>
+
+      <button class="nav-item active" type="button">
+        <span class="ic">◇</span>
+        داشبورد
+      </button>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-label">محتوا</div>
+
+      <button class="nav-item" type="button" id="focusAnime">
+        <span class="ic">✎</span>
+        افزودن انیمه
+      </button>
+
+      <button class="nav-item" type="button" id="focusList">
+        <span class="ic">☰</span>
+        فهرست انیمه‌ها
+      </button>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-label">جامعه</div>
+
+      <button class="nav-item" type="button" id="focusComments">
+        <span class="ic">✦</span>
+        مدیریت نظرات
+      </button>
+
+      <button class="nav-item" type="button" id="focusUsers">
+        <span class="ic">◉</span>
+        کاربران
+      </button>
+    </div>
+
+    <div class="sidebar-foot">
+
+      <div class="avatar"></div>
+
+      <div class="sidebar-user">
+        <strong>مدیر سایت</strong>
+        <span id="logoutSide">خروج از حساب</span>
+      </div>
+
+    </div>
+
+  </aside>
+
+  <!-- MAIN -->
+
+  <main class="main">
+
+    <header class="topbar">
+
+      <div>
+        <h1>داشبورد مدیریت MFA</h1>
+        <div class="path">
+          پنل مدیریت ← داشبورد
+        </div>
+      </div>
+
+      <div class="top-actions">
+
+        <a
+          class="btn btn-ghost"
+          href="index.html"
+        >
+          مشاهده سایت
+        </a>
+
+        <button
+          class="btn btn-primary"
+          id="logoutButton"
+          type="button"
+        >
+          خروج
+        </button>
+
+      </div>
+
+    </header>
+
+    <div class="content">
+
+      <!-- STATS -->
+
+      <section class="stats-row">
+
+        <div class="stat-card">
+          <div class="label">مجموع انیمه‌ها</div>
+          <div class="value" id="animeCount">—</div>
+          <div class="sub">ثبت‌شده در دیتابیس</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="label">کاربران</div>
+          <div class="value" id="userCount">—</div>
+          <div class="sub">حساب‌های ثبت‌شده</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="label">نظرات در انتظار</div>
+          <div class="value" id="pendingCount">—</div>
+          <div class="sub">نیازمند بررسی مدیر</div>
+        </div>
+
+      </section>
+
+      <!-- ADD ANIME -->
+
+      <section
+        class="panel"
+        id="animePanel"
+      >
+
+        <div class="panel-head">
+
+          <div>
+            <h2 id="formTitle">
+              افزودن انیمه جدید
+            </h2>
+
+            <div class="sub">
+              اطلاعات انیمه را وارد و در دیتابیس ذخیره کن.
+            </div>
+          </div>
+
+        </div>
+
+        <div
+          class="message"
+          id="animeMessage"
+        ></div>
+
+        <form id="animeForm">
+
+          <div class="form-grid">
+
+            <div class="field">
+
+              <label>
+                عنوان فارسی
+              </label>
+
+              <input
+                id="title"
+                required
+                placeholder="مثلاً: سایه‌های اسپاراد"
+              >
+
+            </div>
+
+            <div class="field">
+
+              <label>
+                عنوان ژاپنی / اصلی
+              </label>
+
+              <input
+                id="jp_title"
+                placeholder="スパラードの影"
+              >
+
+            </div>
+
+            <div class="field">
+
+              <label>
+                سال انتشار
+              </label>
+
+              <input
+                id="year"
+                placeholder="۱۴۰۴"
+              >
+
+            </div>
+
+            <div class="field">
+
+              <label>
+                استودیو
+              </label>
+
+              <input
+                id="studio"
+                placeholder="نام استودیو"
+              >
+
+            </div>
+
+            <div class="field">
+
+              <label>
+                ژانرها
+              </label>
+
+              <input
+                id="genres"
+                placeholder="فانتزی، اکشن"
+              >
+
+            </div>
+
+            <div class="field">
+
+              <label>
+                وضعیت
+              </label>
+
+              <select id="status">
+
+                <option>
+                  در حال پخش
+                </option>
+
+                <option>
+                  پایان‌یافته
+                </option>
+
+                <option>
+                  اعلام‌شده
+                </option>
+
+              </select>
+
+            </div>
+
+            <div class="field">
+
+              <label>
+                امتیاز
+              </label>
+
+              <input
+                id="score"
+                type="number"
+                min="0"
+                max="10"
+                step="0.1"
+                value="0"
+              >
+
+            </div>
+
+            <div class="field">
+
+              <label>
+                آدرس پوستر
+              </label>
+
+              <input
+                id="poster"
+                type="url"
+                placeholder="https://..."
+              >
+
+            </div>
+
+            <div class="field full">
+
+              <label>
+                خلاصه داستان
+              </label>
+
+              <textarea
+                id="synopsis"
+                placeholder="خلاصه داستان..."
+              ></textarea>
+
+            </div>
+
+            <div class="field full">
+
+              <label>
+                پیش‌نمایش پوستر
+              </label>
+
+              <div
+                class="preview"
+                id="posterPreview"
+              >
+                تصویر پوستر
+              </div>
+
+            </div>
+
+          </div>
+
+          <div class="form-actions">
+
+            <button
+              class="btn btn-primary"
+              type="submit"
+              id="saveAnimeButton"
+            >
+              انتشار انیمه
+            </button>
+
+            <button
+              class="btn btn-ghost"
+              type="button"
+              id="cancelEdit"
+              style="display:none;"
+            >
+              لغو ویرایش
+            </button>
+
+            <button
+              class="btn btn-ghost"
+              type="reset"
+              id="resetForm"
+            >
+              پاک‌کردن فرم
+            </button>
+
+          </div>
+
+        </form>
+
+      </section>
+
+      <!-- ANIME LIST -->
+
+      <section
+        class="panel"
+        id="listPanel"
+      >
+
+        <div class="panel-head">
+
+          <div>
+            <h2>
+              فهرست انیمه‌ها
+            </h2>
+
+            <div class="sub">
+              ویرایش و حذف مستقیم از دیتابیس
+            </div>
+          </div>
+
+          <input
+            id="animeSearch"
+            placeholder="جستجو..."
+            style="
+              border:1px solid var(--accent-line);
+              border-radius:10px;
+              padding:9px 12px;
+              background:var(--bg);
+              outline:none;
+            "
+          >
+
+        </div>
+
+        <div class="table-wrap">
+
+          <table class="table">
+
+            <thead>
+
+              <tr>
+                <th>انیمه</th>
+                <th>ژانر</th>
+                <th>وضعیت</th>
+                <th>امتیاز</th>
+                <th>عملیات</th>
+              </tr>
+
+            </thead>
+
+            <tbody id="animeTableBody">
+
+            </tbody>
+
+          </table>
+
+        </div>
+
+      </section>
+
+      <!-- COMMENTS -->
+
+      <section
+        class="panel"
+        id="commentsPanel"
+      >
+
+        <div class="panel-head">
+
+          <div>
+            <h2>
+              مدیریت نظرات
+            </h2>
+
+            <div class="sub">
+              نظرات در انتظار تأیید
+            </div>
+          </div>
+
+        </div>
+
+        <div id="commentsList">
+
+        </div>
+
+      </section>
+
+      <!-- USERS -->
+
+      <section
+        class="panel"
+        id="usersPanel"
+      >
+
+        <div class="panel-head">
+
+          <div>
+            <h2>
+              کاربران
+            </h2>
+
+            <div class="sub">
+              حساب‌های ثبت‌شده در سایت
+            </div>
+          </div>
+
+        </div>
+
+        <div class="table-wrap">
+
+          <table class="table user-table">
+
+            <thead>
+
+              <tr>
+                <th>نام کاربری</th>
+                <th>نقش</th>
+                <th>تاریخ ثبت‌نام</th>
+              </tr>
+
+            </thead>
+
+            <tbody id="usersTableBody">
+
+            </tbody>
+
+          </table>
+
+        </div>
+
+      </section>
+
+    </div>
+
+  </main>
+
+</div>
+
+<script>
+
+  const token =
+    localStorage.getItem('mfa_token');
+
+  let editingId = null;
+
+  let animeList = [];
+
+  function faNumber(value){
+
+    return String(value)
+      .replace(/0/g,'۰')
+      .replace(/1/g,'۱')
+      .replace(/2/g,'۲')
+      .replace(/3/g,'۳')
+      .replace(/4/g,'۴')
+      .replace(/5/g,'۵')
+      .replace(/6/g,'۶')
+      .replace(/7/g,'۷')
+      .replace(/8/g,'۸')
+      .replace(/9/g,'۹');
+
+  }
+
+  function escapeHtml(value){
+
+    return String(value ?? '')
+      .replace(/&/g,'&amp;')
+      .replace(/</g,'&lt;')
+      .replace(/>/g,'&gt;')
+      .replace(/"/g,'&quot;')
+      .replace(/'/g,'&#039;');
+
+  }
+
+  function authHeaders(){
+
+    return {
+      'Content-Type':'application/json',
+      'Authorization':`Bearer ${token}`
+    };
+
+  }
+
+  async function api(url,options={}){
+
+    const response =
+      await fetch(url,{
+        ...options,
+        headers:{
+          ...authHeaders(),
+          ...(options.headers || {})
+        }
+      });
+
+    const data =
+      await response.json();
+
+    if(response.status === 401 ||
+       response.status === 403){
+
+      localStorage.removeItem('mfa_token');
+
+      window.location.href =
+        'index.html';
+
+      throw new Error(
+        data.error || 'دسترسی غیرمجاز'
+      );
+
+    }
+
+    if(!response.ok){
+
+      throw new Error(
+        data.error || 'خطا در درخواست'
+      );
+
+    }
+
+    return data;
+
+  }
+
+  async function loadStats(){
+
+    const data =
+      await api('/api/admin/stats');
+
+    document.getElementById('animeCount')
+      .textContent =
+      faNumber(data.stats.animeCount);
+
+    document.getElementById('userCount')
+      .textContent =
+      faNumber(data.stats.usersCount);
+
+    document.getElementById('pendingCount')
+      .textContent =
+      faNumber(data.stats.pendingComments);
+
+  }
+
+  async function loadAnime(){
+
+    const data =
+      await api('/api/anime?sort=newest');
+
+    animeList =
+      data.data || [];
+
+    renderAnimeTable(animeList);
+
+  }
+
+  function renderAnimeTable(list){
+
+    const body =
+      document.getElementById('animeTableBody');
+
+    body.innerHTML = '';
+
+    if(!list.length){
+
+      body.innerHTML = `
+        <tr>
+          <td colspan="5">
+            <div class="empty">
+              هنوز انیمه‌ای ثبت نشده است.
+            </div>
+          </td>
+        </tr>
+      `;
+
+      return;
+
+    }
+
+    list.forEach(anime=>{
+
+      const tr =
+        document.createElement('tr');
+
+      const thumb =
+        document.createElement('div');
+
+      thumb.className =
+        'row-thumb';
+
+      if(anime.poster){
+
+        thumb.style.backgroundImage =
+          `url("${anime.poster}")`;
+
+      }
+
+      tr.innerHTML = `
+        <td>
+          <div class="cell-title">
+            <div class="thumb-placeholder"></div>
+            <div>
+              ${escapeHtml(anime.title)}
+              <small>
+                ${escapeHtml(anime.jp_title || '')}
+              </small>
+            </div>
+          </div>
+        </td>
+
+        <td>
+          ${escapeHtml(anime.genres || '—')}
+        </td>
+
+        <td>
+          <span class="badge ${
+            anime.status === 'در حال پخش'
+              ? 'green'
+              : 'gray'
+          }">
+            ${escapeHtml(anime.status || '—')}
+          </span>
+        </td>
+
+        <td>
+          ★ ${faNumber(
+            Number(anime.score || 0).toFixed(1)
+          )}
+        </td>
+
+        <td>
+          <div class="row-actions">
+
+            <button
+              class="icon-mini"
+              title="ویرایش"
+              data-action="edit"
+              data-id="${anime.id}"
+            >
+              ✎
+            </button>
+
+            <button
+              class="icon-mini"
+              title="حذف"
+              data-action="delete"
+              data-id="${anime.id}"
+            >
+              🗑
+            </button>
+
+          </div>
+        </td>
+      `;
+
+      const thumbPlaceholder =
+        tr.querySelector('.thumb-placeholder');
+
+      thumbPlaceholder.className =
+        'row-thumb';
+
+      if(anime.poster){
+
+        thumbPlaceholder.style.backgroundImage =
+          `url("${anime.poster}")`;
+
+      }
+
+      body.appendChild(tr);
+
+    });
+
+  }
+
+  async function loadComments(){
+
+    const data =
+      await api('/api/comments/pending');
+
+    const list =
+      document.getElementById('commentsList');
+
+    list.innerHTML = '';
+
+    if(!data.data.length){
+
+      list.innerHTML = `
+        <div class="empty">
+          نظری در انتظار تأیید وجود ندارد.
+        </div>
+      `;
+
+      return;
+
+    }
+
+    data.data.forEach(comment=>{
+
+      const row =
+        document.createElement('div');
+
+      row.className =
+        'comment-row';
+
+      row.innerHTML = `
+        <div class="comment-head">
+          <span class="comment-user">
+            ${escapeHtml(comment.username)}
+          </span>
+
+          <span class="comment-on">
+            روی «${escapeHtml(comment.anime_title)}»
+          </span>
+        </div>
+
+        <div class="comment-text">
+          ${escapeHtml(comment.text)}
+        </div>
+
+        <div class="comment-actions">
+
+          <span
+            class="approve"
+            data-comment-action="approve"
+            data-id="${comment.id}"
+          >
+            تأیید
+          </span>
+
+          <span
+            class="delete"
+            data-comment-action="delete"
+            data-id="${comment.id}"
+          >
+            حذف
+          </span>
+
+        </div>
+      `;
+
+      list.appendChild(row);
+
+    });
+
+  }
+
+  async function loadUsers(){
+
+    try{
+
+      const response =
+        await fetch('/api/admin/stats',{
+          headers:authHeaders()
+        });
+
+      if(response.status === 401 ||
+         response.status === 403){
+
+        localStorage.removeItem('mfa_token');
+
+        window.location.href =
+          'index.html';
+
+        return;
+
+      }
+
+      /*
+        نسخه فعلی server.js آمار کاربران را دارد،
+        اما لیست کامل کاربران را API نمی‌کند.
+        بنابراین جدول کاربران را با اطلاعات پایه
+        قابل توسعه نگه می‌داریم.
+      */
+
+      const body =
+        document.getElementById('usersTableBody');
+
+      body.innerHTML = `
+        <tr>
+          <td>مدیریت کاربران</td>
+          <td>
+            <span class="badge green">
+              فعال
+            </span>
+          </td>
+          <td>
+            در نسخه بعدی API کامل کاربران اضافه می‌شود.
+          </td>
+        </tr>
+      `;
+
+    }catch(error){
+
+      console.error(error);
+
+    }
+
+  }
+
+  function resetAnimeForm(){
+
+    editingId = null;
+
+    document.getElementById('animeForm')
+      .reset();
+
+    document.getElementById('score')
+      .value = '0';
+
+    document.getElementById('formTitle')
+      .textContent =
+      'افزودن انیمه جدید';
+
+    document.getElementById('saveAnimeButton')
+      .textContent =
+      'انتشار انیمه';
+
+    document.getElementById('cancelEdit')
+      .style.display =
+      'none';
+
+    document.getElementById('posterPreview')
+      .style.backgroundImage =
+      '';
+
+    document.getElementById('posterPreview')
+      .textContent =
+      'تصویر پوستر';
+
+    document.getElementById('animeMessage')
+      .textContent =
+      '';
+
+  }
+
+  function startEdit(anime){
+
+    editingId =
+      anime.id;
+
+    document.getElementById('title')
+      .value =
+      anime.title || '';
+
+    document.getElementById('jp_title')
+      .value =
+      anime.jp_title || '';
+
+    document.getElementById('year')
+      .value =
+      anime.year || '';
+
+    document.getElementById('studio')
+      .value =
+      anime.studio || '';
+
+    document.getElementById('genres')
+      .value =
+      anime.genres || '';
+
+    document.getElementById('status')
+      .value =
+      anime.status || 'در حال پخش';
+
+    document.getElementById('score')
+      .value =
+      anime.score || 0;
+
+    document.getElementById('poster')
+      .value =
+      anime.poster || '';
+
+    document.getElementById('synopsis')
+      .value =
+      anime.synopsis || '';
+
+    updatePosterPreview();
+
+    document.getElementById('formTitle')
+      .textContent =
+      `ویرایش: ${anime.title}`;
+
+    document.getElementById('saveAnimeButton')
+      .textContent =
+      'ذخیره تغییرات';
+
+    document.getElementById('cancelEdit')
+      .style.display =
+      'inline-block';
+
+    document.getElementById('animePanel')
+      .scrollIntoView({
+        behavior:'smooth',
+        block:'start'
+      });
+
+  }
+
+  function updatePosterPreview(){
+
+    const url =
+      document.getElementById('poster')
+        .value.trim();
+
+    const preview =
+      document.getElementById('posterPreview');
+
+    if(url){
+
+      preview.style.backgroundImage =
+        `url("${url}")`;
+
+      preview.textContent = '';
+
+    }else{
+
+      preview.style.backgroundImage =
+        '';
+
+      preview.textContent =
+        'تصویر پوستر';
+
+    }
+
+  }
+
+  async function saveAnime(event){
+
+    event.preventDefault();
+
+    const message =
+      document.getElementById('animeMessage');
+
+    message.textContent =
+      'در حال ذخیره...';
+
+    const payload = {
+
+      title:
+        document.getElementById('title').value.trim(),
+
+      jp_title:
+        document.getElementById('jp_title').value.trim(),
+
+      year:
+        document.getElementById('year').value.trim(),
+
+      studio:
+        document.getElementById('studio').value.trim(),
+
+      genres:
+        document.getElementById('genres').value.trim(),
+
+      status:
+        document.getElementById('status').value,
+
+      score:
+        Number(
+          document.getElementById('score').value
+        ) || 0,
+
+      poster:
+        document.getElementById('poster').value.trim(),
+
+      synopsis:
+        document.getElementById('synopsis').value.trim()
+
+    };
+
+    try{
+
+      if(editingId){
+
+        await api(
+          `/api/anime/${editingId}`,
+          {
+            method:'PUT',
+            body:JSON.stringify(payload)
+          }
+        );
+
+        message.textContent =
+          'انیمه با موفقیت ویرایش شد.';
+
+      }else{
+
+        await api(
+          '/api/anime',
+          {
+            method:'POST',
+            body:JSON.stringify(payload)
+          }
+        );
+
+        message.textContent =
+          'انیمه با موفقیت ثبت شد.';
+
+      }
+
+      resetAnimeForm();
+
+      await Promise.all([
+        loadAnime(),
+        loadStats()
+      ]);
+
+    }catch(error){
+
+      console.error(error);
+
+      message.textContent =
+        error.message ||
+        'خطا در ذخیره انیمه';
+
+    }
+
+  }
+
+  async function deleteAnime(id){
+
+    const anime =
+      animeList.find(
+        item=>Number(item.id) === Number(id)
+      );
+
+    if(!anime){
+      return;
+    }
+
+    const confirmed =
+      confirm(
+        `آیا از حذف «${anime.title}» مطمئنی؟`
+      );
+
+    if(!confirmed){
+      return;
+    }
+
+    try{
+
+      await api(
+        `/api/anime/${id}`,
+        {
+          method:'DELETE'
+        }
+      );
+
+      await Promise.all([
+        loadAnime(),
+        loadStats()
+      ]);
+
+    }catch(error){
+
+      alert(
+        error.message ||
+        'حذف انجام نشد.'
+      );
+
+    }
+
+  }
+
+  async function handleCommentAction(
+    action,
+    id
+  ){
+
+    try{
+
+      if(action === 'approve'){
+
+        await api(
+          `/api/comments/${id}`,
+          {
+            method:'PATCH',
+            body:JSON.stringify({
+              status:'approved'
+            })
+          }
+        );
+
+      }
+
+      if(action === 'delete'){
+
+        await api(
+          `/api/comments/${id}`,
+          {
+            method:'DELETE'
+          }
+        );
+
+      }
+
+      await Promise.all([
+        loadComments(),
+        loadStats()
+      ]);
+
+    }catch(error){
+
+      alert(
+        error.message ||
+        'عملیات انجام نشد.'
+      );
+
+    }
+
+  }
+
+  /* EVENTS */
+
+  document
+    .getElementById('animeForm')
+    .addEventListener(
+      'submit',
+      saveAnime
+    );
+
+  document
+    .getElementById('poster')
+    .addEventListener(
+      'input',
+      updatePosterPreview
+    );
+
+  document
+    .getElementById('cancelEdit')
+    .addEventListener(
+      'click',
+      resetAnimeForm
+    );
+
+  document
+    .getElementById('resetForm')
+    .addEventListener(
+      'click',
+      ()=>{
+        setTimeout(
+          resetAnimeForm,
+          0
+        );
+      }
+    );
+
+  document
+    .getElementById('animeSearch')
+    .addEventListener(
+      'input',
+      event=>{
+
+        const q =
+          event.target.value
+            .trim()
+            .toLowerCase();
+
+        if(!q){
+
+          renderAnimeTable(
+            animeList
+          );
+
+          return;
+
+        }
+
+        const filtered =
+          animeList.filter(
+            anime=>
+              String(anime.title || '')
+                .toLowerCase()
+                .includes(q)
+              ||
+              String(anime.jp_title || '')
+                .toLowerCase()
+                .includes(q)
+              ||
+              String(anime.genres || '')
+                .toLowerCase()
+                .includes(q)
+          );
+
+        renderAnimeTable(
+          filtered
+        );
+
+      }
+    );
+
+  document
+    .getElementById('animeTableBody')
+    .addEventListener(
+      'click',
+      event=>{
+
+        const button =
+          event.target.closest(
+            '[data-action]'
+          );
+
+        if(!button){
+          return;
+        }
+
+        const id =
+          Number(
+            button.dataset.id
+          );
+
+        if(
+          button.dataset.action === 'edit'
+        ){
+
+          const anime =
+            animeList.find(
+              item=>Number(item.id) === id
+            );
+
+          if(anime){
+            startEdit(anime);
+          }
+
+        }
+
+        if(
+          button.dataset.action === 'delete'
+        ){
+
+          deleteAnime(id);
+
+        }
+
+      }
+    );
+
+  document
+    .getElementById('commentsList')
+    .addEventListener(
+      'click',
+      event=>{
+
+        const element =
+          event.target.closest(
+            '[data-comment-action]'
+          );
+
+        if(!element){
+          return;
+        }
+
+        handleCommentAction(
+          element.dataset.commentAction,
+          Number(element.dataset.id)
+        );
+
+      }
+    );
+
+  function scrollToId(id){
+
+    document
+      .getElementById(id)
+      ?.scrollIntoView({
+        behavior:'smooth',
+        block:'start'
+      });
+
+  }
+
+  document
+    .getElementById('focusAnime')
+    .addEventListener(
+      'click',
+      ()=>scrollToId('animePanel')
+    );
+
+  document
+    .getElementById('focusList')
+    .addEventListener(
+      'click',
+      ()=>scrollToId('listPanel')
+    );
+
+  document
+    .getElementById('focusComments')
+    .addEventListener(
+      'click',
+      ()=>scrollToId('commentsPanel')
+    );
+
+  document
+    .getElementById('focusUsers')
+    .addEventListener(
+      'click',
+      ()=>scrollToId('usersPanel')
+    );
+
+  function logout(){
+
+    localStorage.removeItem(
+      'mfa_token'
+    );
+
+    window.location.href =
+      'index.html';
+
+  }
+
+  document
+    .getElementById('logoutButton')
+    .addEventListener(
+      'click',
+      logout
+    );
+
+  document
+    .getElementById('logoutSide')
+    .addEventListener(
+      'click',
+      logout
+    );
+
+  /* START */
+
+  if(!token){
+
+    window.location.href =
+      'index.html';
+
+  }else{
+
+    Promise.all([
+      loadStats(),
+      loadAnime(),
+      loadComments(),
+      loadUsers()
+    ]).catch(error=>{
+      console.error(error);
+    });
+
+  }
+
+</script>
+
+</body>
+</html>

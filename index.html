@@ -213,7 +213,9 @@ select{
       #f6d3e1,
       #eda9c2 45%,
       #c15c86
-    )
+    );
+  background-size:cover;
+  background-position:center
 }
 
 .poster:before{
@@ -327,7 +329,9 @@ section{
 }
 
 .thumb{
-  height:150px
+  height:150px;
+  background-size:cover;
+  background-position:center
 }
 
 .body{
@@ -374,6 +378,12 @@ section{
   gap:20px
 }
 
+.empty-note{
+  color:var(--faint);
+  font-size:.85rem;
+  padding:20px 2px
+}
+
 .rank{
   background:#fff;
   border:1px solid var(--line);
@@ -388,7 +398,9 @@ section{
 
 .rankthumb{
   height:230px;
-  position:relative
+  position:relative;
+  background-size:cover;
+  background-position:center
 }
 
 .num{
@@ -442,6 +454,26 @@ section{
   background:var(--a);
   color:#fff;
   border-color:var(--a)
+}
+
+.telegram-cta{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  flex-wrap:wrap;
+  background:linear-gradient(155deg,#3a1c2a,#2a1220);
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:20px;
+  padding:26px 30px;
+  margin-bottom:34px
+}
+
+.telegram-cta p{
+  margin:0;
+  color:#ecd6df;
+  font-size:.92rem;
+  line-height:1.9
 }
 
 footer{
@@ -531,6 +563,11 @@ footer{
   .bottom{
     flex-direction:column;
     gap:8px
+  }
+
+  .telegram-cta{
+    flex-direction:column;
+    align-items:flex-start
   }
 
 }
@@ -624,10 +661,14 @@ footer{
 
     <a
       class="feature"
+      id="featureCard"
       href="anime-detail.html"
     >
 
-      <div class="poster p1">
+      <div
+        class="poster p1"
+        id="featurePoster"
+      >
 
         <span class="tag">
           انتخاب سردبیر
@@ -639,18 +680,21 @@ footer{
 
         <div>
 
-          <h3>
-            سایه‌های اسپاراد
+          <h3 id="featureTitle">
+            —
           </h3>
 
-          <div class="jp">
-            スパラードの影
-          </div>
+          <div
+            class="jp"
+            id="featureJp"
+          ></div>
 
         </div>
 
-        <div class="score">
-          ★ ۹.۲
+        <div
+          class="score"
+          id="featureScore"
+        >
         </div>
 
       </div>
@@ -679,6 +723,28 @@ footer{
 
 </div>
 
+<div class="wrap">
+
+  <div class="telegram-cta">
+
+    <p>
+      تمام انیمه‌ها در کانال تلگرامی ما معرفی می‌شوند.<br>
+      برای مشاهده جدیدترین انیمه‌ها عضو شوید:
+    </p>
+
+    <a
+      class="btn primary"
+      href="https://t.me/my_faourite_anime"
+      target="_blank"
+      rel="noopener"
+    >
+      عضویت در کانال تلگرام
+    </a>
+
+  </div>
+
+</div>
+
 <section id="airing">
 
   <div class="wrap">
@@ -699,7 +765,7 @@ footer{
 
       <a
         class="see"
-        href="search.html?status=airing"
+        href="search.html?status=در حال پخش"
       >
         مشاهده همه ›
       </a>
@@ -731,7 +797,7 @@ footer{
         </h2>
 
         <p>
-          رتبه‌بندی بر اساس امتیاز کاربران MFA
+          رتبه‌بندی بر اساس امتیاز IMDb
         </p>
 
       </div>
@@ -963,6 +1029,16 @@ footer{
         <ul>
 
           <li>
+            <a
+              href="https://t.me/my_faourite_anime"
+              target="_blank"
+              rel="noopener"
+            >
+              کانال تلگرام
+            </a>
+          </li>
+
+          <li>
             <a href="#">
               قوانین سایت
             </a>
@@ -1004,116 +1080,6 @@ footer{
 
 <script>
 
-const base = [
-
-  {
-    t:'سایه‌های اسپاراد',
-    jp:'スパラードの影',
-    score:9.2,
-    g:['فانتزی','اکشن'],
-    status:'در حال پخش'
-  },
-
-  {
-    t:'خط شکن آسمان',
-    jp:'空の破断線',
-    score:9,
-    g:['اکشن','فانتزی'],
-    status:'در حال پخش'
-  },
-
-  {
-    t:'باغ ون‌یو',
-    jp:'ヴァンユウの庭',
-    score:8.8,
-    g:['درام'],
-    status:'پایان‌یافته'
-  },
-
-  {
-    t:'مریدیان سرخ',
-    jp:'紅の子午線',
-    score:8.7,
-    g:['علمی‌تخیلی'],
-    status:'در حال پخش'
-  },
-
-  {
-    t:'زمزمه‌های کاگه',
-    jp:'影の囁き',
-    score:8.6,
-    g:['رمزآلود','درام'],
-    status:'در حال پخش'
-  },
-
-  {
-    t:'ترانه‌ی موج پنجم',
-    jp:'第五波の歌',
-    score:8.5,
-    g:['موسیقی'],
-    status:'پایان‌یافته'
-  },
-
-  {
-    t:'باشگاه ستاره صبح',
-    jp:'朝星クラブ',
-    score:8.4,
-    g:['ورزشی'],
-    status:'در حال پخش'
-  },
-
-  {
-    t:'دفترچه هزار فصل',
-    jp:'千季ノート',
-    score:8.3,
-    g:['اسلایس‌آف‌لایف'],
-    status:'در حال پخش'
-  },
-
-  {
-    t:'کوره‌راه یشمی',
-    jp:'翡翠の小道',
-    score:8.1,
-    g:['فانتزی','ماجراجویی'],
-    status:'پایان‌یافته'
-  },
-
-  {
-    t:'ساعت شنی هوا',
-    jp:'風の砂時計',
-    score:7.9,
-    g:['علمی‌تخیلی'],
-    status:'اعلام‌شده'
-  },
-
-  {
-    t:'رقص مه صبحگاهی',
-    jp:'朝霧の舞',
-    score:7.8,
-    g:['رمانتیک','درام'],
-    status:'در حال پخش'
-  },
-
-  {
-    t:'نور در آب',
-    jp:'水の中の光',
-    score:7.6,
-    g:['درام'],
-    status:'پایان‌یافته'
-  }
-
-];
-
-const custom =
-  JSON.parse(
-    localStorage.getItem('mfaAnime') || '[]'
-  );
-
-const all = [
-  ...custom,
-  ...base
-];
-
 const pal = [
   'p1',
   'p2',
@@ -1123,145 +1089,285 @@ const pal = [
   'p6'
 ];
 
-const airing =
-  document.getElementById(
-    'airingList'
-  );
+function faNumber(value){
 
-all
-  .filter(
-    x => x.status === 'در حال پخش'
-  )
-  .slice(0,8)
-  .forEach(
-    (x,i)=>{
+  return String(value)
+    .replace(/0/g,'۰')
+    .replace(/1/g,'۱')
+    .replace(/2/g,'۲')
+    .replace(/3/g,'۳')
+    .replace(/4/g,'۴')
+    .replace(/5/g,'۵')
+    .replace(/6/g,'۶')
+    .replace(/7/g,'۷')
+    .replace(/8/g,'۸')
+    .replace(/9/g,'۹');
 
-      airing.innerHTML += `
+}
 
-        <a
-          class="card"
-          href="search.html?q=${encodeURIComponent(x.t)}"
-        >
+function escapeHtml(value){
 
-          <div
-            class="thumb ${pal[i % pal.length]}"
-          ></div>
+  return String(value ?? '')
+    .replace(/&/g,'&amp;')
+    .replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;')
+    .replace(/'/g,'&#039;');
 
-          <div class="body">
+}
 
-            <h4>
-              ${x.t}
-            </h4>
+function firstGenre(anime){
 
-            <div class="muted">
-              ${x.g.join(' · ')}
-            </div>
+  const genres =
+    String(anime.genres || '')
+      .split(/[،,]/)
+      .map(g => g.trim())
+      .filter(Boolean);
 
-          </div>
+  return genres[0] || '—';
 
-        </a>
+}
 
-      `;
+function renderFeature(anime){
 
-    }
-  );
+  if(!anime){
+    return;
+  }
 
-const rank =
-  document.getElementById(
-    'rankList'
-  );
+  document
+    .getElementById('featureTitle')
+    .textContent =
+    anime.title;
 
-[...all]
-  .sort(
-    (a,b)=>b.score-a.score
-  )
-  .slice(0,8)
-  .forEach(
-    (x,i)=>{
+  document
+    .getElementById('featureJp')
+    .textContent =
+    anime.jp_title || '';
 
-      rank.innerHTML += `
+  document
+    .getElementById('featureScore')
+    .textContent =
+    `IMDb ⭐ ${faNumber(Number(anime.score || 0).toFixed(1))}`;
 
-        <a
-          class="rank"
-          href="search.html?q=${encodeURIComponent(x.t)}"
-        >
+  document
+    .getElementById('featureCard')
+    .href =
+    `anime-detail.html?id=${anime.id}`;
 
-          <div
-            class="rankthumb ${pal[i % pal.length]}"
+  const poster =
+    document.getElementById(
+      'featurePoster'
+    );
+
+  if(anime.poster){
+
+    poster.style.backgroundImage =
+      `url("${anime.poster}")`;
+
+  }
+
+}
+
+function renderHscroll(list,containerId){
+
+  const el =
+    document.getElementById(
+      containerId
+    );
+
+  if(!list.length){
+
+    el.innerHTML =
+      '<div class="empty-note">فعلاً انیمه‌ای برای نمایش نیست.</div>';
+
+    return;
+
+  }
+
+  el.innerHTML =
+    list
+      .map(
+        (anime,i)=> `
+          <a
+            class="card"
+            href="anime-detail.html?id=${anime.id}"
           >
 
-            <div class="num">
-              ${i+1}
-            </div>
+            <div
+              class="thumb ${pal[i % pal.length]}"
+              ${
+                anime.poster
+                  ? `style="background-image:url('${anime.poster}')"`
+                  : ''
+              }
+            ></div>
 
-          </div>
+            <div class="body">
 
-          <div class="rankbody">
+              <h4>
+                ${escapeHtml(anime.title)}
+              </h4>
 
-            <h4>
-              ${x.t}
-            </h4>
-
-            <div class="rankfoot">
-
-              <span class="score">
-                ★ ${x.score}
-              </span>
-
-              <span class="pill">
-                ${x.g[0]}
-              </span>
+              <div class="muted">
+                ${escapeHtml(anime.genres || '')}
+              </div>
 
             </div>
 
-          </div>
+          </a>
+        `
+      )
+      .join('');
 
-        </a>
+}
 
-      `;
+function renderRankGrid(list,containerId,{ showRank = false, showMeta = 'score' } = {}){
+
+  const el =
+    document.getElementById(
+      containerId
+    );
+
+  if(!list.length){
+
+    el.innerHTML =
+      '<div class="empty-note">فعلاً انیمه‌ای برای نمایش نیست.</div>';
+
+    return;
+
+  }
+
+  el.innerHTML =
+    list
+      .map(
+        (anime,i)=> `
+          <a
+            class="rank"
+            href="anime-detail.html?id=${anime.id}"
+          >
+
+            <div
+              class="rankthumb ${pal[i % pal.length]}"
+              ${
+                anime.poster
+                  ? `style="background-image:url('${anime.poster}')"`
+                  : ''
+              }
+            >
+
+              ${
+                showRank
+                  ? `<div class="num">${i+1}</div>`
+                  : ''
+              }
+
+            </div>
+
+            <div class="rankbody">
+
+              <h4>
+                ${escapeHtml(anime.title)}
+              </h4>
+
+              <div class="rankfoot">
+
+                ${
+                  showMeta === 'score'
+                    ? `
+                      <span class="score">
+                        IMDb ⭐ ${faNumber(Number(anime.score || 0).toFixed(1))}
+                      </span>
+                      <span class="pill">
+                        ${escapeHtml(firstGenre(anime))}
+                      </span>
+                    `
+                    : `
+                      <span class="muted">
+                        ${escapeHtml(anime.year || '')} · ${escapeHtml(anime.status || '')}
+                      </span>
+                    `
+                }
+
+              </div>
+
+            </div>
+
+          </a>
+        `
+      )
+      .join('');
+
+}
+
+async function loadHome(){
+
+  try{
+
+    const response =
+      await fetch('/api/anime?sort=newest');
+
+    const data =
+      await response.json();
+
+    const all =
+      data.data || [];
+
+    if(all.length){
+
+      renderFeature(all[0]);
 
     }
-  );
 
-const newest =
-  document.getElementById(
-    'newestList'
-  );
+    const airing =
+      all.filter(
+        x => x.status === 'در حال پخش'
+      ).slice(0,8);
 
-all
-  .slice(0,8)
-  .forEach(
-    (x,i)=>{
+    renderHscroll(
+      airing,
+      'airingList'
+    );
 
-      newest.innerHTML += `
+    const ranked =
+      [...all]
+        .sort(
+          (a,b)=> Number(b.score||0) - Number(a.score||0)
+        )
+        .slice(0,8);
 
-        <a
-          class="rank"
-          href="search.html?q=${encodeURIComponent(x.t)}"
-        >
+    renderRankGrid(
+      ranked,
+      'rankList',
+      { showRank:true, showMeta:'score' }
+    );
 
-          <div
-            class="rankthumb ${pal[i % pal.length]}"
-          ></div>
+    const newest =
+      all.slice(0,8);
 
-          <div class="rankbody">
+    renderRankGrid(
+      newest,
+      'newestList',
+      { showRank:false, showMeta:'status' }
+    );
 
-            <h4>
-              ${x.t}
-            </h4>
+  }catch(error){
 
-            <div class="muted">
-              ۱۴۰۵ · ${x.status}
-            </div>
+    console.error(error);
 
-          </div>
+    [
+      'airingList',
+      'rankList',
+      'newestList'
+    ].forEach(id=>{
 
-        </a>
+      document.getElementById(id).innerHTML =
+        '<div class="empty-note">در دریافت اطلاعات از سرور خطایی رخ داد.</div>';
 
-      `;
+    });
 
-    }
-  );
+  }
+
+}
 
 document
   .getElementById('loginBtn')
@@ -1272,6 +1378,8 @@ document
     );
 
   };
+
+loadHome();
 
 </script>
 

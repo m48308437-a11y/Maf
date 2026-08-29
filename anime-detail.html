@@ -248,8 +248,9 @@
 
     .score-number{
       color:var(--gold);
-      font-size:1.3rem;
+      font-size:1.15rem;
       font-weight:900;
+      white-space:nowrap;
     }
 
     .score-label{
@@ -281,6 +282,15 @@
       font-weight:700;
     }
 
+    .age-tag{
+      border-radius:999px;
+      padding:5px 10px;
+      background:var(--ink);
+      color:#fff;
+      font-size:.72rem;
+      font-weight:800;
+    }
+
     .synopsis{
       color:var(--ink-soft);
       font-size:.93rem;
@@ -291,7 +301,7 @@
 
     .meta-grid{
       display:grid;
-      grid-template-columns:repeat(4,1fr);
+      grid-template-columns:repeat(3,1fr);
       gap:10px;
       margin-bottom:22px;
     }
@@ -320,6 +330,28 @@
       gap:10px;
     }
 
+    /* TELEGRAM */
+
+    .telegram-cta{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      flex-wrap:wrap;
+      background:linear-gradient(155deg,#FDF2F7,#FDE9F1);
+      border:1px solid var(--accent-line);
+      border-radius:18px;
+      padding:20px 24px;
+      margin-top:24px;
+    }
+
+    .telegram-cta p{
+      margin:0;
+      color:var(--ink-soft);
+      font-size:.85rem;
+      line-height:1.9;
+    }
+
     /* BODY */
 
     .section{
@@ -346,66 +378,6 @@
     .section-sub{
       color:var(--ink-soft);
       font-size:.82rem;
-    }
-
-    /* EPISODES */
-
-    .episodes{
-      display:grid;
-      grid-template-columns:repeat(4,1fr);
-      gap:14px;
-    }
-
-    .episode{
-      background:#fff;
-      border:1px solid var(--accent-line);
-      border-radius:14px;
-      padding:14px;
-      transition:.2s;
-    }
-
-    .episode:hover{
-      transform:translateY(-3px);
-      box-shadow:var(--shadow);
-    }
-
-    .episode-top{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:8px;
-      margin-bottom:10px;
-    }
-
-    .episode-number{
-      font-size:.85rem;
-      font-weight:800;
-    }
-
-    .episode-status{
-      color:var(--green);
-      background:#EAF8F0;
-      padding:4px 8px;
-      border-radius:999px;
-      font-size:.63rem;
-      font-weight:800;
-    }
-
-    .episode-date{
-      color:var(--ink-faint);
-      font-size:.72rem;
-      margin-bottom:11px;
-    }
-
-    .episode-btn{
-      width:100%;
-      padding:8px;
-      border-radius:9px;
-      border:1px solid var(--accent-line);
-      background:var(--bg-alt);
-      color:var(--accent-deep);
-      font-weight:700;
-      cursor:pointer;
     }
 
     /* COMMENTS */
@@ -541,10 +513,6 @@
         grid-template-columns:1fr 1fr;
       }
 
-      .episodes{
-        grid-template-columns:1fr 1fr;
-      }
-
       .comments-layout{
         grid-template-columns:1fr;
       }
@@ -585,9 +553,9 @@
         grid-template-columns:1fr 1fr;
       }
 
-      .episodes{
-        grid-template-columns:1fr 1fr;
-        gap:10px;
+      .telegram-cta{
+        flex-direction:column;
+        align-items:flex-start;
       }
 
       .footer-bottom{
@@ -664,7 +632,7 @@
           </div>
 
           <div class="score-label">
-            امتیاز کاربران
+            امتیاز IMDb
           </div>
 
         </div>
@@ -690,8 +658,18 @@
         </div>
 
         <div class="meta-card">
+          <div class="meta-label">کشور سازنده</div>
+          <div class="meta-value" id="animeCountry">—</div>
+        </div>
+
+        <div class="meta-card">
           <div class="meta-label">وضعیت</div>
           <div class="meta-value" id="animeStatus">—</div>
+        </div>
+
+        <div class="meta-card">
+          <div class="meta-label">رده سنی</div>
+          <div class="meta-value" id="animeAgeRating">—</div>
         </div>
 
         <div class="meta-card">
@@ -719,31 +697,22 @@
 
       </div>
 
-    </div>
+      <div class="telegram-cta">
 
-  </div>
+        <p>
+          تمام انیمه‌ها در کانال تلگرامی ما معرفی می‌شوند.<br>
+          برای مشاهده جدیدترین انیمه‌ها عضو شوید:
+        </p>
 
-</section>
+        <a
+          class="btn btn-primary"
+          href="https://t.me/my_faourite_anime"
+          target="_blank"
+          rel="noopener"
+        >
+          عضویت در کانال تلگرام
+        </a>
 
-<section class="section">
-
-  <div class="wrap">
-
-    <div class="section-head">
-
-      <div>
-        <h2>قسمت‌ها</h2>
-        <div class="section-sub">
-          قسمت‌های منتشرشده این انیمه
-        </div>
-      </div>
-
-    </div>
-
-    <div class="episodes" id="episodes">
-
-      <div class="empty">
-        در حال بارگذاری قسمت‌ها...
       </div>
 
     </div>
@@ -900,17 +869,20 @@
   const studio =
     document.getElementById('animeStudio');
 
+  const country =
+    document.getElementById('animeCountry');
+
   const status =
     document.getElementById('animeStatus');
+
+  const ageRating =
+    document.getElementById('animeAgeRating');
 
   const idElement =
     document.getElementById('animeId');
 
   const statusBadge =
     document.getElementById('posterStatus');
-
-  const episodes =
-    document.getElementById('episodes');
 
   const commentsList =
     document.getElementById('commentsList');
@@ -989,58 +961,6 @@
 
         tags.appendChild(element);
       });
-  }
-
-  function createEpisodeCards(anime){
-
-    const count =
-      anime.status === 'پایان‌یافته'
-        ? 12
-        : 8;
-
-    episodes.innerHTML = '';
-
-    for(let i=1;i<=count;i++){
-
-      const card =
-        document.createElement('div');
-
-      card.className = 'episode';
-
-      card.innerHTML = `
-        <div class="episode-top">
-          <span class="episode-number">
-            قسمت ${faNumber(i)}
-          </span>
-
-          <span class="episode-status">
-            منتشر شده
-          </span>
-        </div>
-
-        <div class="episode-date">
-          MFA Anime
-        </div>
-
-        <button
-          class="episode-btn"
-          type="button"
-          data-episode="${i}"
-        >
-          مشاهده قسمت
-        </button>
-      `;
-
-      card
-        .querySelector('.episode-btn')
-        .addEventListener('click',()=>{
-          alert(
-            `قسمت ${faNumber(i)} هنوز به سیستم پخش ویدیو متصل نشده است.`
-          );
-        });
-
-      episodes.appendChild(card);
-    }
   }
 
   function formatDate(dateValue){
@@ -1126,9 +1046,9 @@
       synopsis.textContent =
         'لطفاً از صفحه جستجو یک انیمه را انتخاب کنید.';
 
-      episodes.innerHTML = `
+      commentsList.innerHTML = `
         <div class="empty">
-          برای مشاهده جزئیات، یک انیمه را از آرشیو انتخاب کن.
+          برای مشاهده نظرات، یک انیمه را از آرشیو انتخاب کن.
         </div>
       `;
 
@@ -1161,7 +1081,7 @@
         anime.jp_title || '';
 
       score.textContent =
-        Number(anime.score || 0).toFixed(1);
+        `IMDb ⭐ ${faNumber(Number(anime.score || 0).toFixed(1))}`;
 
       synopsis.textContent =
         anime.synopsis ||
@@ -1173,8 +1093,14 @@
       studio.textContent =
         anime.studio || '—';
 
+      country.textContent =
+        anime.country || '—';
+
       status.textContent =
         anime.status || '—';
+
+      ageRating.textContent =
+        anime.age_rating || '—';
 
       statusBadge.textContent =
         anime.status || 'نامشخص';
@@ -1191,8 +1117,6 @@
 
       }
 
-      createEpisodeCards(anime);
-
       renderComments(data.comments || []);
 
     }catch(error){
@@ -1205,12 +1129,6 @@
       synopsis.textContent =
         error.message ||
         'اطلاعات انیمه قابل دریافت نیست.';
-
-      episodes.innerHTML = `
-        <div class="empty">
-          انیمه پیدا نشد یا سرور در دسترس نیست.
-        </div>
-      `;
 
       commentsList.innerHTML = `
         <div class="empty">

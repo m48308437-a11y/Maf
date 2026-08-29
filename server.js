@@ -1,11 +1,10 @@
 
 const express = require("express");
+
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { Pool } = require("pg");
-
 const app = express();
-
 const PORT = process.env.PORT || 3000;
 const JWT_SECRET =
   process.env.JWT_SECRET || "CHANGE_THIS_SECRET";
@@ -1158,4 +1157,3 @@ async function startServer() {
 }
 
 startServer();
-```

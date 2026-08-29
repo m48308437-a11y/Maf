@@ -1,20 +1,25 @@
 ```js
 const express = require("express");
-const path = require("path");
-const Database = require("better-sqlite3");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const { Pool } = require("pg");
 
 const app = express();
 
 const PORT = process.env.PORT || 3000;
 const JWT_SECRET =
-  process.env.JWT_SECRET || "mfa-change-this-secret";
+  process.env.JWT_SECRET || "CHANGE_THIS_SECRET";
 
-const dbPath =
-  process.env.DB_PATH || path.join(__dirname, "mfa.db");
+if (!process.env.DATABASE_URL) {
+  console.error("DATABASE_URL is not configured.");
+}
 
-const db = new Database(dbPath);
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: process.env.DATABASE_URL
+    ? { rejectUnauthorized: false }
+    : false
+});
 
 app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({
@@ -28,85 +33,77 @@ app.use(express.static(__dirname));
    DATABASE
 ========================= */
 
-db.exec(`
-  CREATE TABLE IF NOT EXISTS users (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    username TEXT UNIQUE NOT NULL,
-    password TEXT NOT NULL,
-    role TEXT NOT NULL DEFAULT 'user',
-    created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+async function initDatabase() {
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS users (
+      id SERIAL PRIMARY KEY,
+      username TEXT UNIQUE NOT NULL,
+      password TEXT NOT NULL,
+      role TEXT NOT NULL DEFAULT 'user',
+      created_at TIMESTAMP NOT NULL DEFAULT NOW()
+    );
+
+    CREATE TABLE IF NOT EXISTS anime (
+      id SERIAL PRIMARY KEY,
+      title TEXT NOT NULL,
+      jp_title TEXT DEFAULT '',
+      year TEXT DEFAULT '',
+      studio TEXT DEFAULT '',
+      genres TEXT DEFAULT '',
+      status TEXT DEFAULT 'در حال پخش',
+      score NUMERIC(3,1) DEFAULT 0,
+      synopsis TEXT DEFAULT '',
+      poster TEXT DEFAULT '',
+      created_at TIMESTAMP NOT NULL DEFAULT NOW()
+    );
+
+    CREATE TABLE IF NOT EXISTS comments (
+      id SERIAL PRIMARY KEY,
+      anime_id INTEGER NOT NULL REFERENCES anime(id) ON DELETE CASCADE,
+      user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+      text TEXT NOT NULL,
+      status TEXT NOT NULL DEFAULT 'pending',
+      created_at TIMESTAMP NOT NULL DEFAULT NOW()
+    );
+  `);
+
+  const admin = await pool.query(
+    "SELECT id FROM users WHERE username = $1",
+    ["admin"]
   );
 
-  CREATE TABLE IF NOT EXISTS anime (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    title TEXT NOT NULL,
-    jp_title TEXT DEFAULT '',
-    year TEXT DEFAULT '',
-    studio TEXT DEFAULT '',
-    genres TEXT DEFAULT '',
-    status TEXT DEFAULT 'در حال پخش',
-    score REAL DEFAULT 0,
-    synopsis TEXT DEFAULT '',
-    poster TEXT DEFAULT '',
-    created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+  if (admin.rowCount === 0) {
+    const password = await bcrypt.hash("admin123", 10);
+
+    await pool.query(
+      `INSERT INTO users
+       (username, password, role)
+       VALUES ($1, $2, $3)`,
+      ["admin", password, "admin"]
+    );
+  }
+
+  const demoUser = await pool.query(
+    "SELECT id FROM users WHERE username = $1",
+    ["mfauser"]
   );
 
-  CREATE TABLE IF NOT EXISTS comments (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    anime_id INTEGER NOT NULL,
-    user_id INTEGER NOT NULL,
-    text TEXT NOT NULL,
-    status TEXT NOT NULL DEFAULT 'pending',
-    created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (anime_id) REFERENCES anime(id),
-    FOREIGN KEY (user_id) REFERENCES users(id)
-  );
-`);
+  if (demoUser.rowCount === 0) {
+    const password = await bcrypt.hash("user123", 10);
 
-/* =========================
-   DEFAULT USERS
-========================= */
+    await pool.query(
+      `INSERT INTO users
+       (username, password, role)
+       VALUES ($1, $2, $3)`,
+      ["mfauser", password, "user"]
+    );
+  }
 
-const adminPassword =
-  bcrypt.hashSync("admin123", 10);
-
-const sampleUserPassword =
-  bcrypt.hashSync("user123", 10);
-
-const adminExists = db
-  .prepare(
-    "SELECT id FROM users WHERE username = ?"
-  )
-  .get("admin");
-
-if (!adminExists) {
-  db.prepare(
-    "INSERT INTO users (username, password, role) VALUES (?, ?, ?)"
-  ).run(
-    "admin",
-    adminPassword,
-    "admin"
-  );
-}
-
-const sampleUserExists = db
-  .prepare(
-    "SELECT id FROM users WHERE username = ?"
-  )
-  .get("mfauser");
-
-if (!sampleUserExists) {
-  db.prepare(
-    "INSERT INTO users (username, password, role) VALUES (?, ?, ?)"
-  ).run(
-    "mfauser",
-    sampleUserPassword,
-    "user"
-  );
+  console.log("PostgreSQL database ready.");
 }
 
 /* =========================
-   HELPERS
+   AUTH
 ========================= */
 
 function authRequired(req, res, next) {
@@ -120,16 +117,15 @@ function authRequired(req, res, next) {
       });
     }
 
-    const token =
-      header.substring(7);
+    const token = header.slice(7);
 
-    const decoded =
-      jwt.verify(token, JWT_SECRET);
-
-    req.user = decoded;
+    req.user = jwt.verify(
+      token,
+      JWT_SECRET
+    );
 
     next();
-  } catch (error) {
+  } catch {
     return res.status(401).json({
       error: "توکن نامعتبر یا منقضی شده است"
     });
@@ -150,7 +146,7 @@ function adminRequired(req, res, next) {
 }
 
 /* =========================
-   AUTH
+   REGISTER
 ========================= */
 
 app.post(
@@ -158,14 +154,10 @@ app.post(
   async (req, res) => {
     try {
       const username =
-        String(
-          req.body.username || ""
-        ).trim();
+        String(req.body.username || "").trim();
 
       const password =
-        String(
-          req.body.password || ""
-        );
+        String(req.body.password || "");
 
       if (
         !username ||
@@ -177,12 +169,12 @@ app.post(
         });
       }
 
-      const exists =
-        db.prepare(
-          "SELECT id FROM users WHERE username = ?"
-        ).get(username);
+      const exists = await pool.query(
+        "SELECT id FROM users WHERE username = $1",
+        [username]
+      );
 
-      if (exists) {
+      if (exists.rowCount > 0) {
         return res.status(409).json({
           error:
             "این نام کاربری قبلاً ثبت شده است"
@@ -190,65 +182,57 @@ app.post(
       }
 
       const hashed =
-        await bcrypt.hash(
-          password,
-          10
-        );
+        await bcrypt.hash(password, 10);
 
-      const result =
-        db.prepare(
-          `INSERT INTO users
-          (username, password, role)
-          VALUES (?, ?, 'user')`
-        ).run(
-          username,
-          hashed
-        );
+      const result = await pool.query(
+        `INSERT INTO users
+         (username, password, role)
+         VALUES ($1, $2, 'user')
+         RETURNING id, username, role`,
+        [username, hashed]
+      );
 
-      return res.json({
+      res.status(201).json({
         success: true,
-        user: {
-          id: result.lastInsertRowid,
-          username,
-          role: "user"
-        }
+        user: result.rows[0]
       });
     } catch (error) {
       console.error(error);
 
-      return res.status(500).json({
-        error:
-          "خطا در ثبت‌نام"
+      res.status(500).json({
+        error: "خطا در ثبت‌نام"
       });
     }
   }
 );
+
+/* =========================
+   LOGIN
+========================= */
 
 app.post(
   "/api/login",
   async (req, res) => {
     try {
       const username =
-        String(
-          req.body.username || ""
-        ).trim();
+        String(req.body.username || "").trim();
 
       const password =
-        String(
-          req.body.password || ""
-        );
+        String(req.body.password || "");
 
-      const user =
-        db.prepare(
-          "SELECT * FROM users WHERE username = ?"
-        ).get(username);
+      const result = await pool.query(
+        "SELECT * FROM users WHERE username = $1",
+        [username]
+      );
 
-      if (!user) {
+      if (result.rowCount === 0) {
         return res.status(401).json({
           error:
             "نام کاربری یا رمز عبور اشتباه است"
         });
       }
+
+      const user = result.rows[0];
 
       const valid =
         await bcrypt.compare(
@@ -271,12 +255,10 @@ app.post(
             role: user.role
           },
           JWT_SECRET,
-          {
-            expiresIn: "7d"
-          }
+          { expiresIn: "7d" }
         );
 
-      return res.json({
+      res.json({
         success: true,
         token,
         user: {
@@ -288,53 +270,51 @@ app.post(
     } catch (error) {
       console.error(error);
 
-      return res.status(500).json({
-        error:
-          "خطا در ورود"
+      res.status(500).json({
+        error: "خطا در ورود"
       });
     }
   }
 );
+
+/* =========================
+   CURRENT USER
+========================= */
 
 app.get(
   "/api/me",
   authRequired,
   (req, res) => {
     res.json({
+      success: true,
       user: req.user
     });
   }
 );
 
 /* =========================
-   USERS
+   USERS - ADMIN
 ========================= */
-
-/*
-  فقط مدیر فعلی می‌تواند
-  نقش یک کاربر را تغییر دهد.
-*/
 
 app.get(
   "/api/admin/users",
   authRequired,
   adminRequired,
-  (req, res) => {
+  async (req, res) => {
     try {
-      const users =
-        db.prepare(`
-          SELECT
-            id,
-            username,
-            role,
-            created_at
-          FROM users
-          ORDER BY id DESC
-        `).all();
+      const result = await pool.query(`
+        SELECT
+          id,
+          username,
+          role,
+          created_at
+        FROM users
+        ORDER BY id DESC
+      `);
 
       res.json({
         success: true,
-        data: users
+        data: result.rows
       });
     } catch (error) {
       console.error(error);
@@ -347,45 +327,27 @@ app.get(
   }
 );
 
+/* تغییر نقش */
+
 app.patch(
   "/api/admin/users/:id/role",
   authRequired,
   adminRequired,
-  (req, res) => {
+  async (req, res) => {
     try {
       const id =
         Number(req.params.id);
 
       const role =
-        String(
-          req.body.role || ""
-        ).trim();
+        String(req.body.role || "").trim();
 
       if (
         !["user", "admin"].includes(role)
       ) {
         return res.status(400).json({
-          error:
-            "نقش نامعتبر است"
+          error: "نقش نامعتبر است"
         });
       }
-
-      const targetUser =
-        db.prepare(
-          "SELECT * FROM users WHERE id = ?"
-        ).get(id);
-
-      if (!targetUser) {
-        return res.status(404).json({
-          error:
-            "کاربر پیدا نشد"
-        });
-      }
-
-      /*
-        جلوگیری از حذف سطح ادمینی
-        خود ادمین فعلی.
-      */
 
       if (
         Number(req.user.id) === id &&
@@ -393,51 +355,50 @@ app.patch(
       ) {
         return res.status(400).json({
           error:
-            "نمی‌توانی نقش خودت را از ادمین به کاربر تغییر دهی"
+            "نمی‌توانی ادمینی خودت را حذف کنی"
         });
       }
 
-      db.prepare(
-        "UPDATE users SET role = ? WHERE id = ?"
-      ).run(
-        role,
-        id
+      const result = await pool.query(
+        `UPDATE users
+         SET role = $1
+         WHERE id = $2
+         RETURNING id, username, role, created_at`,
+        [role, id]
       );
 
-      const updated =
-        db.prepare(
-          "SELECT id, username, role, created_at FROM users WHERE id = ?"
-        ).get(id);
+      if (result.rowCount === 0) {
+        return res.status(404).json({
+          error: "کاربر پیدا نشد"
+        });
+      }
 
       res.json({
         success: true,
         message:
           role === "admin"
-            ? "کاربر با موفقیت ادمین شد"
+            ? "کاربر ادمین شد"
             : "نقش کاربر تغییر کرد",
-        user: updated
+        user: result.rows[0]
       });
     } catch (error) {
       console.error(error);
 
       res.status(500).json({
         error:
-          "خطا در تغییر نقش کاربر"
+          "خطا در تغییر نقش"
       });
     }
   }
 );
 
-/*
-  مسیر آماده برای ادمین کردن
-  مستقیم با username.
-*/
+/* ادمین کردن با username */
 
 app.post(
   "/api/admin/promote",
   authRequired,
   adminRequired,
-  (req, res) => {
+  async (req, res) => {
     try {
       const username =
         String(
@@ -451,32 +412,26 @@ app.post(
         });
       }
 
-      const targetUser =
-        db.prepare(
-          "SELECT id, username, role FROM users WHERE username = ?"
-        ).get(username);
+      const result = await pool.query(
+        `UPDATE users
+         SET role = 'admin'
+         WHERE username = $1
+         RETURNING id, username, role`,
+        [username]
+      );
 
-      if (!targetUser) {
+      if (result.rowCount === 0) {
         return res.status(404).json({
           error:
-            "کاربر با این نام کاربری پیدا نشد"
+            "کاربری با این نام پیدا نشد"
         });
       }
-
-      db.prepare(
-        "UPDATE users SET role = 'admin' WHERE id = ?"
-      ).run(targetUser.id);
-
-      const updated =
-        db.prepare(
-          "SELECT id, username, role FROM users WHERE id = ?"
-        ).get(targetUser.id);
 
       res.json({
         success: true,
         message:
           `کاربر ${username} اکنون ادمین است`,
-        user: updated
+        user: result.rows[0]
       });
     } catch (error) {
       console.error(error);
@@ -490,67 +445,87 @@ app.post(
 );
 
 /* =========================
-   ANIME
+   ANIME LIST
 ========================= */
 
 app.get(
   "/api/anime",
-  (req, res) => {
+  async (req, res) => {
     try {
-      const {
-        q = "",
-        genre = "",
-        status = "",
-        minScore = "",
-        sort = "newest"
-      } = req.query;
+      const q =
+        String(req.query.q || "").trim();
+
+      const genre =
+        String(req.query.genre || "").trim();
+
+      const status =
+        String(req.query.status || "").trim();
+
+      const minScore =
+        req.query.minScore !== undefined
+          ? Number(req.query.minScore)
+          : null;
+
+      const sort =
+        String(
+          req.query.sort || "newest"
+        );
+
+      const values = [];
+      const conditions = [];
+
+      if (q) {
+        values.push(`%${q}%`);
+
+        conditions.push(`
+          (
+            title ILIKE $${values.length}
+            OR jp_title ILIKE $${values.length}
+            OR studio ILIKE $${values.length}
+            OR genres ILIKE $${values.length}
+          )
+        `);
+      }
+
+      if (genre) {
+        values.push(`%${genre}%`);
+
+        conditions.push(
+          `genres ILIKE $${values.length}`
+        );
+      }
+
+      if (status) {
+        values.push(status);
+
+        conditions.push(
+          `status = $${values.length}`
+        );
+      }
+
+      if (
+        minScore !== null &&
+        Number.isFinite(minScore)
+      ) {
+        values.push(minScore);
+
+        conditions.push(
+          `score >= $${values.length}`
+        );
+      }
 
       let sql =
-        "SELECT * FROM anime WHERE 1=1";
+        "SELECT * FROM anime";
 
-      const params = {};
-
-      if (q.trim()) {
-        sql += `
-          AND (
-            title LIKE @q
-            OR jp_title LIKE @q
-            OR studio LIKE @q
-            OR genres LIKE @q
-          )
-        `;
-
-        params.q =
-          `%${q.trim()}%`;
-      }
-
-      if (genre.trim()) {
+      if (conditions.length) {
         sql +=
-          " AND genres LIKE @genre";
-
-        params.genre =
-          `%${genre.trim()}%`;
-      }
-
-      if (status.trim()) {
-        sql +=
-          " AND status = @status";
-
-        params.status =
-          status.trim();
-      }
-
-      if (minScore !== "") {
-        sql +=
-          " AND score >= @minScore";
-
-        params.minScore =
-          Number(minScore);
+          " WHERE " +
+          conditions.join(" AND ");
       }
 
       if (sort === "score") {
         sql +=
-          " ORDER BY score DESC";
+          " ORDER BY score DESC, id DESC";
       } else if (sort === "alpha") {
         sql +=
           " ORDER BY title ASC";
@@ -559,12 +534,15 @@ app.get(
           " ORDER BY id DESC";
       }
 
-      const rows =
-        db.prepare(sql).all(params);
+      const result =
+        await pool.query(
+          sql,
+          values
+        );
 
       res.json({
         success: true,
-        data: rows
+        data: result.rows
       });
     } catch (error) {
       console.error(error);
@@ -577,27 +555,33 @@ app.get(
   }
 );
 
+/* =========================
+   ANIME DETAIL
+========================= */
+
 app.get(
   "/api/anime/:id",
-  (req, res) => {
+  async (req, res) => {
     try {
       const id =
         Number(req.params.id);
 
-      const anime =
-        db.prepare(
-          "SELECT * FROM anime WHERE id = ?"
-        ).get(id);
+      const animeResult =
+        await pool.query(
+          "SELECT * FROM anime WHERE id = $1",
+          [id]
+        );
 
-      if (!anime) {
+      if (animeResult.rowCount === 0) {
         return res.status(404).json({
           error:
             "انیمه پیدا نشد"
         });
       }
 
-      const comments =
-        db.prepare(`
+      const commentsResult =
+        await pool.query(
+          `
           SELECT
             comments.id,
             comments.text,
@@ -606,32 +590,38 @@ app.get(
           FROM comments
           JOIN users
             ON users.id = comments.user_id
-          WHERE comments.anime_id = ?
+          WHERE comments.anime_id = $1
             AND comments.status = 'approved'
           ORDER BY comments.id DESC
-        `).all(id);
+          `,
+          [id]
+        );
 
       res.json({
         success: true,
-        anime,
-        comments
+        anime: animeResult.rows[0],
+        comments: commentsResult.rows
       });
     } catch (error) {
       console.error(error);
 
       res.status(500).json({
         error:
-          "خطا در دریافت اطلاعات انیمه"
+          "خطا در دریافت اطلاعات"
       });
     }
   }
 );
 
+/* =========================
+   ADD ANIME
+========================= */
+
 app.post(
   "/api/anime",
   authRequired,
   adminRequired,
-  (req, res) => {
+  async (req, res) => {
     try {
       const {
         title,
@@ -656,7 +646,8 @@ app.post(
       }
 
       const result =
-        db.prepare(`
+        await pool.query(
+          `
           INSERT INTO anime
           (
             title,
@@ -669,29 +660,26 @@ app.post(
             synopsis,
             poster
           )
-          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-        `).run(
-          String(title).trim(),
-          jp_title,
-          year,
-          studio,
-          genres,
-          status,
-          Number(score) || 0,
-          synopsis,
-          poster
-        );
-
-      const anime =
-        db.prepare(
-          "SELECT * FROM anime WHERE id = ?"
-        ).get(
-          result.lastInsertRowid
+          VALUES
+          ($1,$2,$3,$4,$5,$6,$7,$8,$9)
+          RETURNING *
+          `,
+          [
+            String(title).trim(),
+            jp_title,
+            year,
+            studio,
+            genres,
+            status,
+            Number(score) || 0,
+            synopsis,
+            poster
+          ]
         );
 
       res.status(201).json({
         success: true,
-        anime
+        anime: result.rows[0]
       });
     } catch (error) {
       console.error(error);
@@ -704,99 +692,98 @@ app.post(
   }
 );
 
+/* =========================
+   EDIT ANIME
+========================= */
+
 app.put(
   "/api/anime/:id",
   authRequired,
   adminRequired,
-  (req, res) => {
+  async (req, res) => {
     try {
       const id =
         Number(req.params.id);
 
       const current =
-        db.prepare(
-          "SELECT * FROM anime WHERE id = ?"
-        ).get(id);
+        await pool.query(
+          "SELECT * FROM anime WHERE id = $1",
+          [id]
+        );
 
-      if (!current) {
+      if (current.rowCount === 0) {
         return res.status(404).json({
           error:
             "انیمه پیدا نشد"
         });
       }
 
+      const old =
+        current.rows[0];
+
       const updated = {
         title:
-          req.body.title ??
-          current.title,
+          req.body.title ?? old.title,
 
         jp_title:
-          req.body.jp_title ??
-          current.jp_title,
+          req.body.jp_title ?? old.jp_title,
 
         year:
-          req.body.year ??
-          current.year,
+          req.body.year ?? old.year,
 
         studio:
-          req.body.studio ??
-          current.studio,
+          req.body.studio ?? old.studio,
 
         genres:
-          req.body.genres ??
-          current.genres,
+          req.body.genres ?? old.genres,
 
         status:
-          req.body.status ??
-          current.status,
+          req.body.status ?? old.status,
 
         score:
-          req.body.score ??
-          current.score,
+          req.body.score ?? old.score,
 
         synopsis:
-          req.body.synopsis ??
-          current.synopsis,
+          req.body.synopsis ?? old.synopsis,
 
         poster:
-          req.body.poster ??
-          current.poster
+          req.body.poster ?? old.poster
       };
 
-      db.prepare(`
-        UPDATE anime
-        SET
-          title = ?,
-          jp_title = ?,
-          year = ?,
-          studio = ?,
-          genres = ?,
-          status = ?,
-          score = ?,
-          synopsis = ?,
-          poster = ?
-        WHERE id = ?
-      `).run(
-        updated.title,
-        updated.jp_title,
-        updated.year,
-        updated.studio,
-        updated.genres,
-        updated.status,
-        Number(updated.score) || 0,
-        updated.synopsis,
-        updated.poster,
-        id
-      );
-
-      const anime =
-        db.prepare(
-          "SELECT * FROM anime WHERE id = ?"
-        ).get(id);
+      const result =
+        await pool.query(
+          `
+          UPDATE anime
+          SET
+            title = $1,
+            jp_title = $2,
+            year = $3,
+            studio = $4,
+            genres = $5,
+            status = $6,
+            score = $7,
+            synopsis = $8,
+            poster = $9
+          WHERE id = $10
+          RETURNING *
+          `,
+          [
+            updated.title,
+            updated.jp_title,
+            updated.year,
+            updated.studio,
+            updated.genres,
+            updated.status,
+            Number(updated.score) || 0,
+            updated.synopsis,
+            updated.poster,
+            id
+          ]
+        );
 
       res.json({
         success: true,
-        anime
+        anime: result.rows[0]
       });
     } catch (error) {
       console.error(error);
@@ -809,25 +796,26 @@ app.put(
   }
 );
 
+/* =========================
+   DELETE ANIME
+========================= */
+
 app.delete(
   "/api/anime/:id",
   authRequired,
   adminRequired,
-  (req, res) => {
+  async (req, res) => {
     try {
       const id =
         Number(req.params.id);
 
-      db.prepare(
-        "DELETE FROM comments WHERE anime_id = ?"
-      ).run(id);
-
       const result =
-        db.prepare(
-          "DELETE FROM anime WHERE id = ?"
-        ).run(id);
+        await pool.query(
+          "DELETE FROM anime WHERE id = $1 RETURNING id",
+          [id]
+        );
 
-      if (result.changes === 0) {
+      if (result.rowCount === 0) {
         return res.status(404).json({
           error:
             "انیمه پیدا نشد"
@@ -855,7 +843,7 @@ app.delete(
 app.post(
   "/api/anime/:id/comments",
   authRequired,
-  (req, res) => {
+  async (req, res) => {
     try {
       const animeId =
         Number(req.params.id);
@@ -865,18 +853,6 @@ app.post(
           req.body.text || ""
         ).trim();
 
-      const anime =
-        db.prepare(
-          "SELECT id FROM anime WHERE id = ?"
-        ).get(animeId);
-
-      if (!anime) {
-        return res.status(404).json({
-          error:
-            "انیمه پیدا نشد"
-        });
-      }
-
       if (!text) {
         return res.status(400).json({
           error:
@@ -884,23 +860,39 @@ app.post(
         });
       }
 
+      const anime =
+        await pool.query(
+          "SELECT id FROM anime WHERE id = $1",
+          [animeId]
+        );
+
+      if (anime.rowCount === 0) {
+        return res.status(404).json({
+          error:
+            "انیمه پیدا نشد"
+        });
+      }
+
       const result =
-        db.prepare(`
+        await pool.query(
+          `
           INSERT INTO comments
           (anime_id, user_id, text, status)
-          VALUES (?, ?, ?, 'pending')
-        `).run(
-          animeId,
-          req.user.id,
-          text
+          VALUES ($1, $2, $3, 'pending')
+          RETURNING id
+          `,
+          [
+            animeId,
+            req.user.id,
+            text
+          ]
         );
 
       res.status(201).json({
         success: true,
         message:
           "نظر شما ثبت شد و پس از تأیید نمایش داده می‌شود",
-        id:
-          result.lastInsertRowid
+        id: result.rows[0].id
       });
     } catch (error) {
       console.error(error);
@@ -917,10 +909,10 @@ app.get(
   "/api/comments/pending",
   authRequired,
   adminRequired,
-  (req, res) => {
+  async (req, res) => {
     try {
-      const comments =
-        db.prepare(`
+      const result =
+        await pool.query(`
           SELECT
             comments.id,
             comments.text,
@@ -935,11 +927,11 @@ app.get(
             ON anime.id = comments.anime_id
           WHERE comments.status = 'pending'
           ORDER BY comments.id DESC
-        `).all();
+        `);
 
       res.json({
         success: true,
-        data: comments
+        data: result.rows
       });
     } catch (error) {
       console.error(error);
@@ -956,7 +948,7 @@ app.patch(
   "/api/comments/:id",
   authRequired,
   adminRequired,
-  (req, res) => {
+  async (req, res) => {
     try {
       const id =
         Number(req.params.id);
@@ -980,14 +972,17 @@ app.patch(
       }
 
       const result =
-        db.prepare(
-          "UPDATE comments SET status = ? WHERE id = ?"
-        ).run(
-          status,
-          id
+        await pool.query(
+          `
+          UPDATE comments
+          SET status = $1
+          WHERE id = $2
+          RETURNING id, status
+          `,
+          [status, id]
         );
 
-      if (result.changes === 0) {
+      if (result.rowCount === 0) {
         return res.status(404).json({
           error:
             "نظر پیدا نشد"
@@ -995,7 +990,8 @@ app.patch(
       }
 
       res.json({
-        success: true
+        success: true,
+        comment: result.rows[0]
       });
     } catch (error) {
       console.error(error);
@@ -1012,17 +1008,18 @@ app.delete(
   "/api/comments/:id",
   authRequired,
   adminRequired,
-  (req, res) => {
+  async (req, res) => {
     try {
       const id =
         Number(req.params.id);
 
       const result =
-        db.prepare(
-          "DELETE FROM comments WHERE id = ?"
-        ).run(id);
+        await pool.query(
+          "DELETE FROM comments WHERE id = $1 RETURNING id",
+          [id]
+        );
 
-      if (result.changes === 0) {
+      if (result.rowCount === 0) {
         return res.status(404).json({
           error:
             "نظر پیدا نشد"
@@ -1051,31 +1048,38 @@ app.get(
   "/api/admin/stats",
   authRequired,
   adminRequired,
-  (req, res) => {
+  async (req, res) => {
     try {
-      const animeCount =
-        db.prepare(
+      const anime =
+        await pool.query(
           "SELECT COUNT(*) AS count FROM anime"
-        ).get().count;
+        );
 
-      const usersCount =
-        db.prepare(
+      const users =
+        await pool.query(
           "SELECT COUNT(*) AS count FROM users"
-        ).get().count;
+        );
 
-      const pendingComments =
-        db.prepare(`
+      const pending =
+        await pool.query(
+          `
           SELECT COUNT(*) AS count
           FROM comments
           WHERE status = 'pending'
-        `).get().count;
+          `
+        );
 
       res.json({
         success: true,
         stats: {
-          animeCount,
-          usersCount,
-          pendingComments
+          animeCount:
+            Number(anime.rows[0].count),
+
+          usersCount:
+            Number(users.rows[0].count),
+
+          pendingComments:
+            Number(pending.rows[0].count)
         }
       });
     } catch (error) {
@@ -1090,12 +1094,39 @@ app.get(
 );
 
 /* =========================
+   HEALTH CHECK
+========================= */
+
+app.get(
+  "/api/health",
+  async (req, res) => {
+    try {
+      await pool.query("SELECT 1");
+
+      res.json({
+        success: true,
+        database: "postgresql",
+        status: "ok"
+      });
+    } catch (error) {
+      console.error(error);
+
+      res.status(500).json({
+        success: false,
+        database: "postgresql",
+        status: "error"
+      });
+    }
+  }
+);
+
+/* =========================
    HOME
 ========================= */
 
 app.get("/", (req, res) => {
   res.sendFile(
-    path.join(__dirname, "index.html")
+    __dirname + "/index.html"
   );
 });
 
@@ -1103,13 +1134,28 @@ app.get("/", (req, res) => {
    START
 ========================= */
 
-app.listen(
-  PORT,
-  "0.0.0.0",
-  () => {
-    console.log(
-      `MFA server running on port ${PORT}`
+async function startServer() {
+  try {
+    await initDatabase();
+
+    app.listen(
+      PORT,
+      "0.0.0.0",
+      () => {
+        console.log(
+          `MFA server running on port ${PORT}`
+        );
+      }
     );
+  } catch (error) {
+    console.error(
+      "Failed to start server:",
+      error
+    );
+
+    process.exit(1);
   }
-);
+}
+
+startServer();
 ```

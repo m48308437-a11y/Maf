@@ -30,6 +30,34 @@
       box-sizing:border-box;
     }
 
+    @media (prefers-reduced-motion: no-preference){
+
+      .reveal{
+        opacity:0;
+        transform:translateY(22px);
+        transition:opacity .6s cubic-bezier(.22,.9,.32,1),transform .6s cubic-bezier(.22,.9,.32,1);
+      }
+
+      .reveal.in-view{
+        opacity:1;
+        transform:translateY(0);
+      }
+
+      @keyframes popIn{
+        from{opacity:0;transform:translateY(10px)}
+        to{opacity:1;transform:translateY(0)}
+      }
+
+      .pop-in{
+        animation:popIn .4s cubic-bezier(.22,.9,.32,1) both;
+      }
+
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      .reveal{opacity:1;transform:none}
+    }
+
     body{
       margin:0;
       background:var(--bg);
@@ -214,7 +242,11 @@
       padding:10px 17px;
       font-size:.82rem;
       font-weight:800;
-      transition:.2s;
+      transition:transform .2s cubic-bezier(.22,.9,.32,1),background .2s ease;
+    }
+
+    .btn:active{
+      transform:scale(.95);
     }
 
     .btn-primary{
@@ -267,6 +299,12 @@
       border:1px solid var(--accent-line);
       border-radius:16px;
       padding:20px;
+      transition:transform .3s cubic-bezier(.22,.9,.32,1),box-shadow .3s ease;
+    }
+
+    .stat-card:hover{
+      transform:translateY(-4px);
+      box-shadow:var(--shadow);
     }
 
     .stat-card .label{
@@ -482,11 +520,13 @@
       background:#fff;
       color:var(--ink-soft);
       cursor:pointer;
+      transition:transform .2s cubic-bezier(.22,.9,.32,1),background .2s ease,color .2s ease;
     }
 
     .icon-mini:hover{
       background:var(--bg-alt);
       color:var(--accent-deep);
+      transform:translateY(-2px);
     }
 
     /* COMMENTS */
@@ -749,7 +789,7 @@
 
       <!-- STATS -->
 
-      <section class="stats-row" id="statsPanel">
+      <section class="stats-row reveal" id="statsPanel">
 
         <div class="stat-card">
           <div class="label">مجموع انیمه‌ها</div>
@@ -774,7 +814,7 @@
       <!-- ADD / EDIT -->
 
       <section
-        class="panel"
+        class="panel reveal"
         id="animePanel"
       >
 
@@ -964,7 +1004,7 @@
       <!-- ANIME LIST -->
 
       <section
-        class="panel"
+        class="panel reveal"
         id="listPanel"
       >
 
@@ -1019,7 +1059,7 @@
       <!-- COMMENTS -->
 
       <section
-        class="panel"
+        class="panel reveal"
         id="commentsPanel"
       >
 
@@ -1042,7 +1082,7 @@
       <!-- USERS -->
 
       <section
-        class="panel"
+        class="panel reveal"
         id="usersPanel"
       >
 
@@ -1103,7 +1143,7 @@
 
       <!-- SITE INTRO / TELEGRAM -->
 
-      <section class="panel">
+      <section class="panel reveal">
 
         <div class="panel-head">
 
@@ -1305,10 +1345,13 @@
 
     }
 
-    list.forEach(anime=>{
+    list.forEach((anime,rowIndex)=>{
 
       const tr =
         document.createElement('tr');
+
+      tr.className = 'pop-in';
+      tr.style.animationDelay = `${rowIndex * 0.03}s`;
 
       tr.innerHTML = `
         <td>

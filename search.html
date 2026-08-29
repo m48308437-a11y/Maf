@@ -235,6 +235,28 @@
       font-weight:400;
     }
 
+    /* TELEGRAM */
+
+    .telegram-strip{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      flex-wrap:wrap;
+      background:#fff;
+      border:1px solid var(--accent-line);
+      border-radius:16px;
+      padding:16px 20px;
+      margin-top:18px;
+    }
+
+    .telegram-strip p{
+      margin:0;
+      color:var(--ink-soft);
+      font-size:.82rem;
+      line-height:1.8;
+    }
+
     /* LAYOUT */
 
     .layout{
@@ -481,6 +503,7 @@
       color:#fff;
       font-size:.7rem;
       font-weight:800;
+      white-space:nowrap;
     }
 
     .result-status{
@@ -495,6 +518,18 @@
       font-weight:800;
     }
 
+    .result-age{
+      position:absolute;
+      right:10px;
+      bottom:10px;
+      padding:3px 8px;
+      border-radius:999px;
+      background:rgba(42,18,32,.62);
+      color:#fff;
+      font-size:.62rem;
+      font-weight:800;
+    }
+
     .result-body{
       padding:14px 16px 17px;
     }
@@ -506,6 +541,12 @@
     }
 
     .result-body .jp{
+      color:var(--ink-faint);
+      font-size:.67rem;
+      margin-bottom:3px;
+    }
+
+    .result-body .country{
       color:var(--ink-faint);
       font-size:.67rem;
       margin-bottom:9px;
@@ -606,6 +647,11 @@
         align-items:flex-start;
         flex-direction:column;
       }
+
+      .telegram-strip{
+        flex-direction:column;
+        align-items:flex-start;
+      }
     }
   </style>
 </head>
@@ -656,6 +702,24 @@
       >
 
       <div class="suggest-panel" id="suggestPanel"></div>
+
+    </div>
+
+    <div class="telegram-strip">
+
+      <p>
+        تمام انیمه‌ها در کانال تلگرامی ما معرفی می‌شوند.<br>
+        برای مشاهده جدیدترین انیمه‌ها عضو شوید:
+      </p>
+
+      <a
+        class="btn btn-primary"
+        href="https://t.me/my_faourite_anime"
+        target="_blank"
+        rel="noopener"
+      >
+        عضویت در کانال تلگرام
+      </a>
 
     </div>
 
@@ -714,7 +778,7 @@
 
       <div class="filter-group">
 
-        <h4>حداقل امتیاز</h4>
+        <h4>حداقل امتیاز IMDb</h4>
 
         <div class="range-row">
 
@@ -750,13 +814,13 @@
           </label>
 
           <label class="radio-row">
-            <input type="radio" name="status" value="پایان‌یافته">
-            پایان‌یافته
+            <input type="radio" name="status" value="پایان یافته">
+            پایان یافته
           </label>
 
           <label class="radio-row">
-            <input type="radio" name="status" value="اعلام‌شده">
-            اعلام‌شده
+            <input type="radio" name="status" value="به‌زودی">
+            به‌زودی
           </label>
 
         </div>
@@ -1016,12 +1080,18 @@
 
       poster.innerHTML = `
         <span class="result-score">
-          ★ ${faNumber(Number(anime.score || 0).toFixed(1))}
+          IMDb ⭐ ${faNumber(Number(anime.score || 0).toFixed(1))}
         </span>
 
         <span class="result-status">
           ${escapeHtml(anime.status || 'نامشخص')}
         </span>
+
+        ${
+          anime.age_rating
+            ? `<span class="result-age">${escapeHtml(anime.age_rating)}</span>`
+            : ''
+        }
       `;
 
       const body =
@@ -1041,6 +1111,13 @@
       jp.className = 'jp';
       jp.textContent =
         anime.jp_title || '';
+
+      const country =
+        document.createElement('div');
+
+      country.className = 'country';
+      country.textContent =
+        anime.country || '';
 
       const tags =
         document.createElement('div');
@@ -1062,6 +1139,11 @@
 
       body.appendChild(title);
       body.appendChild(jp);
+
+      if(anime.country){
+        body.appendChild(country);
+      }
+
       body.appendChild(tags);
 
       card.appendChild(poster);

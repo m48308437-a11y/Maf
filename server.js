@@ -1,4 +1,3 @@
-
 const express = require("express");
 
 const bcrypt = require("bcryptjs");
@@ -32,6 +31,9 @@ app.use(express.static(__dirname));
    DATABASE
 ========================= */
 
+const ALLOWED_STATUS = ["در حال پخش", "پایان یافته", "به‌زودی"];
+const ALLOWED_AGE_RATING = ["G", "PG", "PG-13", "R", "+18"];
+
 async function initDatabase() {
   await pool.query(`
     CREATE TABLE IF NOT EXISTS users (
@@ -48,8 +50,10 @@ async function initDatabase() {
       jp_title TEXT DEFAULT '',
       year TEXT DEFAULT '',
       studio TEXT DEFAULT '',
+      country TEXT DEFAULT '',
       genres TEXT DEFAULT '',
       status TEXT DEFAULT 'در حال پخش',
+      age_rating TEXT DEFAULT '',
       score NUMERIC(3,1) DEFAULT 0,
       synopsis TEXT DEFAULT '',
       poster TEXT DEFAULT '',
@@ -64,6 +68,13 @@ async function initDatabase() {
       status TEXT NOT NULL DEFAULT 'pending',
       created_at TIMESTAMP NOT NULL DEFAULT NOW()
     );
+  `);
+
+  /* migration safety-net: add new columns if the anime table
+     already existed before this update */
+  await pool.query(`
+    ALTER TABLE anime ADD COLUMN IF NOT EXISTS country TEXT DEFAULT '';
+    ALTER TABLE anime ADD COLUMN IF NOT EXISTS age_rating TEXT DEFAULT '';
   `);
 
   const admin = await pool.query(
@@ -460,6 +471,9 @@ app.get(
       const status =
         String(req.query.status || "").trim();
 
+      const country =
+        String(req.query.country || "").trim();
+
       const minScore =
         req.query.minScore !== undefined
           ? Number(req.query.minScore)
@@ -499,6 +513,14 @@ app.get(
 
         conditions.push(
           `status = $${values.length}`
+        );
+      }
+
+      if (country) {
+        values.push(`%${country}%`);
+
+        conditions.push(
+          `country ILIKE $${values.length}`
         );
       }
 
@@ -627,8 +649,10 @@ app.post(
         jp_title = "",
         year = "",
         studio = "",
+        country = "",
         genres = "",
         status = "در حال پخش",
+        age_rating = "",
         score = 0,
         synopsis = "",
         poster = ""
@@ -644,6 +668,18 @@ app.post(
         });
       }
 
+      if (status && !ALLOWED_STATUS.includes(status)) {
+        return res.status(400).json({
+          error: "وضعیت نامعتبر است"
+        });
+      }
+
+      if (age_rating && !ALLOWED_AGE_RATING.includes(age_rating)) {
+        return res.status(400).json({
+          error: "رده سنی نامعتبر است"
+        });
+      }
+
       const result =
         await pool.query(
           `
@@ -653,14 +689,16 @@ app.post(
             jp_title,
             year,
             studio,
+            country,
             genres,
             status,
+            age_rating,
             score,
             synopsis,
             poster
           )
           VALUES
-          ($1,$2,$3,$4,$5,$6,$7,$8,$9)
+          ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)
           RETURNING *
           `,
           [
@@ -668,8 +706,10 @@ app.post(
             jp_title,
             year,
             studio,
+            country,
             genres,
             status,
+            age_rating,
             Number(score) || 0,
             synopsis,
             poster
@@ -720,6 +760,24 @@ app.put(
       const old =
         current.rows[0];
 
+      if (
+        req.body.status &&
+        !ALLOWED_STATUS.includes(req.body.status)
+      ) {
+        return res.status(400).json({
+          error: "وضعیت نامعتبر است"
+        });
+      }
+
+      if (
+        req.body.age_rating &&
+        !ALLOWED_AGE_RATING.includes(req.body.age_rating)
+      ) {
+        return res.status(400).json({
+          error: "رده سنی نامعتبر است"
+        });
+      }
+
       const updated = {
         title:
           req.body.title ?? old.title,
@@ -733,11 +791,17 @@ app.put(
         studio:
           req.body.studio ?? old.studio,
 
+        country:
+          req.body.country ?? old.country,
+
         genres:
           req.body.genres ?? old.genres,
 
         status:
           req.body.status ?? old.status,
+
+        age_rating:
+          req.body.age_rating ?? old.age_rating,
 
         score:
           req.body.score ?? old.score,
@@ -758,12 +822,14 @@ app.put(
             jp_title = $2,
             year = $3,
             studio = $4,
-            genres = $5,
-            status = $6,
-            score = $7,
-            synopsis = $8,
-            poster = $9
-          WHERE id = $10
+            country = $5,
+            genres = $6,
+            status = $7,
+            age_rating = $8,
+            score = $9,
+            synopsis = $10,
+            poster = $11
+          WHERE id = $12
           RETURNING *
           `,
           [
@@ -771,8 +837,10 @@ app.put(
             updated.jp_title,
             updated.year,
             updated.studio,
+            updated.country,
             updated.genres,
             updated.status,
+            updated.age_rating,
             Number(updated.score) || 0,
             updated.synopsis,
             updated.poster,
